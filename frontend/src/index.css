@@ -1,0 +1,169 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #333333;
+    font-family: 'Montserrat';
+}
+
+
+/* Header Style */
+
+.header-main {
+    width: 100%;
+    background-color: #1f1f1f;
+}
+
+.header-logo {
+    width: 200px;
+    height: auto;
+    margin: 20px;
+    margin-left: 5rem;
+}
+
+.header-link {
+    margin-top: 2.5rem;
+}
+
+.header-link h5 {
+    color: #acacac;
+}
+
+.name-space {
+    margin-top: 1rem;
+    color: white;
+}
+
+.name-space i {
+    font-size: 18px;
+    color: #323232;
+    background-color: #c2c2c2;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
+.name-space h5 {
+    margin-top: 1rem;
+    font-size: 15px;
+    margin-left: 15px;
+    color: #c4c4c4;
+}
+
+.secondary-header {
+    background-color: #3d3d3d;
+}
+
+.dropdown {
+    margin-left: 5rem;
+}
+
+.dropdown-genres {
+    border: none;
+    background-color: #3d3d3d;
+    font-size: 12px;
+}
+
+.dropdown-genres:hover {
+    background-color: #0a0a0a;
+    font-size: 12.5px;
+}
+
+.column-order {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.column-order h5 {
+    margin-top: 0.2rem;
+    padding-left: 12rem;
+    padding-right: 1rem;
+    font-size: 13px;
+    color: #ffffff;
+    text-align: right;
+}
+
+.column-order h5:hover {
+    color: rgb(240, 171, 23);
+}
+
+.column-order i {
+    padding-left: 2rem;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: right;
+}
+
+.column-order i:hover {
+    color: rgb(240, 171, 23);
+}
+
+.nav-search {
+    margin-top: -0.4rem;
+    position: absolute;
+    right: 0;
+    z-index: 9999;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    width: 50px;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+}
+
+.nav-search button {
+    width: 51px;
+    height: 60px;
+    background: #0a0a0a;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    font-size: 18px;
+    border: none;
+    border-radius: 0.1rem;
+    float: right;
+    position: relative;
+    z-index: 999;
+}
+
+.nav-search input {
+    z-index: 99;
+    position: absolute;
+    width: 368px;
+    height: 100%;
+    background-color: #111111;
+    color: #c4c4c4;
+    border: none;
+    -webkit-transition: all 0.9s ease-in-out;
+    -moz-transition: all 0.9s ease-in-out;
+    -o-transition: all 0.9s ease-in-out;
+    transition: all 0.9s ease-in-out;
+    padding-left: 10px;
+    font-size: 18px;
+    margin-left: 25rem;
+}
+
+.nav-search:hover input {
+    border-radius: 0.5rem;
+    display: block;
+}
+
+.nav-search:hover {
+    width: 688px;
+}
+
+main {
+    min-height: 80vh;
+    width: 100%;
+}
+
+
+/* Footer Style */
+
+.footer-main {
+    background: #0a0a0a;
+}
+
+.footer-main span {
+    color: #fff;
+}

@@ -21,6 +21,7 @@ import {
     movieDetailsReducer,
     movieNowReducer,
     movieComingReducer,
+    movieUploadReducer,
 } from './reducers/movieReducer';
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -41,6 +42,7 @@ const reducer = combineReducers({
     movieDetails: movieDetailsReducer,
     movieNow: movieNowReducer,
     movieComing: movieComingReducer,
+    movieUpload: movieUploadReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

@@ -61,6 +61,8 @@ const addMovie = asyncHandler(async (req, res, next) => {
             startTime: movie.startTime,
             endTime: movie.endTime,
             status: movie.status,
+            poster: movie.poster,
+            banner: movie.banner,
         });
     } else {
         return next(new ErrorResponse('Invalid Data', 400));
@@ -71,12 +73,27 @@ const addMovie = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/movies/:id
 // @access  Private/Admin
 const updateMovie = asyncHandler(async (req, res, next) => {
-    const movie = await Movie.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-    });
+    const movie = await Movie.findById(req.params.id);
 
     if (movie) {
-        res.send(movie);
+        movie.movieTitle = req.body.movieTitle || movie.movieTitle;
+        movie.mainCast = req.body.mainCast || movie.mainCast;
+        movie.director = req.body.director || movie.director;
+        movie.language = req.body.language || movie.language;
+        movie.genre = req.body.genre || movie.genre;
+        movie.rating = req.body.rating || movie.rating;
+
+        const updatedMovie = await movie.save();
+
+        res.json({
+            _id: updatedMovie._id,
+            movieTitle: updatedMovie.movieTitle,
+            mainCast: updatedMovie.mainCast,
+            director: updatedMovie.director,
+            language: updatedMovie.language,
+            genre: updatedMovie.genre,
+            rating: updatedMovie.rating,
+        });
     } else {
         return next(new ErrorResponse('Could not find movie', 400));
     }
@@ -165,6 +182,28 @@ const checkMovie = asyncHandler(async (req, res) => {
     }
 });
 
+// @desc    UPLOAD movie poster and banner
+// @route   PUT /api/movies/poster/:id
+// @access  Private/Admin
+const uploadMoviePoster = asyncHandler(async (req, res, next) => {
+    const movie = await Movie.findById(req.params.id);
+
+    if (movie) {
+        movie.poster = req.body.poster || movie.poster;
+        movie.banner = req.body.banner || movie.banner;
+
+        const updatedMovie = await movie.save();
+
+        res.json({
+            _id: updatedMovie._id,
+            poster: updatedMovie.poster,
+            banner: updatedMovie.banner,
+        });
+    } else {
+        return next(new ErrorResponse('Could not find movie', 400));
+    }
+});
+
 export {
     getMovieById,
     addMovie,
@@ -173,4 +212,5 @@ export {
     deleteMovie,
     getSortedMovies,
     checkMovie,
+    uploadMoviePoster,
 };

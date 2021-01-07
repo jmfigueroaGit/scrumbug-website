@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import {
     listMovies,
-    getMovieDetails,
     deleteMovie,
+    getMovieDetails,
 } from '../../../actions/movieAction';
 import Loader from '../../../components/Loader';
-import { MOVIE_LIST_RESET } from '../../../constants/movieConstant';
 const MovieListScreen = ({ history }) => {
     const dispatch = useDispatch();
     const movieList = useSelector((state) => state.movieList);
@@ -26,7 +25,6 @@ const MovieListScreen = ({ history }) => {
 
     const editHandler = (id) => {
         dispatch(getMovieDetails(id));
-        history.push(`/user/${id}`);
     };
 
     const deleteHandler = (id) => {
@@ -113,7 +111,7 @@ const MovieListScreen = ({ history }) => {
                                                 <td>{movie.status}</td>
                                                 <td>
                                                     <Link
-                                                        to={`/admin/movie/${movie._id}`}
+                                                        to={`/movie/${movie._id}`}
                                                     >
                                                         <Button
                                                             variant='light'

@@ -25,6 +25,10 @@ import {
     COMING_LIST_SUCCESS,
     COMING_LIST_FAIL,
     MOVIE_LIST_RESET,
+    MOVIE_UPLOAD_REQUEST,
+    MOVIE_UPLOAD_SUCCESS,
+    MOVIE_UPLOAD_FAIL,
+    MOVIE_UPLOAD_RESET,
 } from '../constants/movieConstant';
 
 export const movieListReducer = (state = { moviesList: [] }, action) => {
@@ -85,12 +89,12 @@ export const movieAddReducer = (state = { movieInfo: {} }, action) => {
     }
 };
 
-export const movieUpdateReducer = (state = { movieAdd: {} }, action) => {
+export const movieUpdateReducer = (state = { movieInfo: {} }, action) => {
     switch (action.type) {
         case MOVIE_UPDATE_REQUEST:
             return { loading: true };
         case MOVIE_UPDATE_SUCCESS:
-            return { loading: false, movieAdd: action.payload };
+            return { loading: false, success: true };
         case MOVIE_UPDATE_FAIL:
             return { loading: false, error: action.payload };
         case MOVIE_UPDATE_RESET:
@@ -124,7 +128,26 @@ export const movieDetailsReducer = (state = { movie: {} }, action) => {
         case MOVIE_DETAILS_FAIL:
             return { loading: false, error: action.payload };
         case MOVIE_DETAILS_RESET:
-            return { user: {} };
+            return { movie: {} };
+        default:
+            return state;
+    }
+};
+
+export const movieUploadReducer = (state = { movieUploads: {} }, action) => {
+    switch (action.type) {
+        case MOVIE_UPLOAD_REQUEST:
+            return { loading: true };
+        case MOVIE_UPLOAD_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+                movieUploads: action.payload,
+            };
+        case MOVIE_UPLOAD_FAIL:
+            return { loading: false, error: action.payload };
+        case MOVIE_UPLOAD_RESET:
+            return { movieUploads: {} };
         default:
             return state;
     }

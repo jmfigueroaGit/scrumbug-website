@@ -6,6 +6,10 @@ import Message from '../../../../components/Message';
 import Loader from '../../../../components/Loader';
 import moment from 'moment';
 import { addMovie } from '../../../../actions/movieAction';
+import {
+    MOVIE_DETAILS_RESET,
+    MOVIE_UPDATE_RESET,
+} from '../../../../constants/movieConstant';
 const CinemaDetailsScreen = ({ history }) => {
     const [release, setRelease] = useState('');
     const [endScreening, setEndScreening] = useState('');
@@ -22,7 +26,19 @@ const CinemaDetailsScreen = ({ history }) => {
     const { userInfo } = userLogin;
 
     const movieDetails = useSelector((state) => state.movieDetails);
-    const { loading, error, movie } = movieDetails;
+    const { movie } = movieDetails;
+
+    const movieAdd = useSelector((state) => state.movieAdd);
+    const { loading, error, movieInfo } = movieAdd;
+
+    useEffect(() => {
+        if (movieInfo) {
+            if (movieInfo._id) {
+                //dispatch({ type: MOVIE_DETAILS_RESET });
+                history.push(`/poster-add/${movieInfo._id}`);
+            }
+        }
+    }, [history, movieInfo, dispatch]);
 
     const releaseDate = moment(release, 'YYYY-MM-DD').format('MM-DD-YYYY');
     const endDate = moment(endScreening, 'YYYY-MM-DD').format('MM-DD-YYYY');
@@ -33,12 +49,6 @@ const CinemaDetailsScreen = ({ history }) => {
     duration = movieEnd.diff(movieStart, 'minutes');
     let today = moment().add(4, 'weeks').format('YYYY-MM-DD');
     let after = moment(releaseDate).isAfter(today);
-
-    useEffect(() => {
-        if (movie.status) {
-            history.push('/movielist');
-        }
-    }, [history, movie]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -160,7 +170,7 @@ const CinemaDetailsScreen = ({ history }) => {
                                             <Col className='inactive-add add-btn'>
                                                 <h5>Step 3</h5>
                                                 <i className='fas fa-images'></i>
-                                                <p>Cinema information</p>
+                                                <p>Movie Posters</p>
                                             </Col>
                                         </Row>
                                         <Row>

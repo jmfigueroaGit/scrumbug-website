@@ -7,6 +7,7 @@ import {
     getSortedMovies,
     updateMovie,
     checkMovie,
+    uploadMoviePoster,
 } from '../controllers/movieControllers.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
 
@@ -20,8 +21,9 @@ router.route('/sorted').get(getSortedMovies);
 router.route('/add').post(protect, admin, addMovie);
 router
     .route('/:id')
-    .get(protect, admin, getMovieById)
+    .get(getMovieById)
     .put(protect, admin, updateMovie)
     .delete(protect, admin, deleteMovie);
+router.route('/poster/:id').put(protect, admin, uploadMoviePoster);
 
 export default router;

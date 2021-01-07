@@ -21,7 +21,7 @@ const Header = () => {
         dispatch(logout());
     };
     return (
-        <div className='header-main'>
+        <div className='header-main '>
             {userInfo ? (
                 <div>
                     {' '}

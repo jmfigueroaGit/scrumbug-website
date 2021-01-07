@@ -76,7 +76,11 @@ const movieSchema = mongoose.Schema(
         slug: String,
         poster: {
             type: String,
-            default: 'no-photo.jpg',
+            default: `/uploads/poster.jpg`,
+        },
+        banner: {
+            type: String,
+            default: '/uploads/banner.jpg',
         },
     },
     {

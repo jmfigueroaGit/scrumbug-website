@@ -4,8 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import Message from '../../../../components/Message';
 import Loader from '../../../../components/Loader';
-import { checkMovie } from '../../../../actions/movieAction';
-const MovieAddScreen = ({ history }) => {
+import { updateMovie } from '../../../../actions/movieAction';
+import {
+    MOVIE_DETAILS_RESET,
+    MOVIE_UPDATE_RESET,
+} from '../../../../constants/movieConstant';
+
+const MovieEditScreen = ({ history, match }) => {
+    const movieId = match.params.id;
+
     const [movieTitle, setMovieTitle] = useState('');
     const [mainCast, setMainCast] = useState('');
     const [director, setDirector] = useState('');
@@ -22,13 +29,26 @@ const MovieAddScreen = ({ history }) => {
     const movieDetails = useSelector((state) => state.movieDetails);
     const { loading, error, movie } = movieDetails;
 
+    const movieUpdate = useSelector((state) => state.movieUpdate);
+    const {
+        loading: loadingUpdate,
+        error: errorUpdate,
+        success: successUpdate,
+    } = movieUpdate;
+
     useEffect(() => {
-        if (movie) {
-            if (movie.movieTitle) {
-                history.push('/cinema-add');
-            }
+        if (successUpdate) {
+            dispatch({ type: MOVIE_UPDATE_RESET });
+            history.push('/movielist');
+        } else {
+            setMovieTitle(movie.movieTitle);
+            setMainCast(movie.mainCast);
+            setDirector(movie.director);
+            setLanguage(movie.language);
+            setGenre(movie.genre);
+            setRating(movie.rating);
         }
-    }, [history, movie]);
+    }, [dispatch, history, movieId, movie, successUpdate]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -43,16 +63,23 @@ const MovieAddScreen = ({ history }) => {
             setMessage('Please fill in required fields');
         } else {
             dispatch(
-                checkMovie(
+                updateMovie({
+                    _id: movieId,
                     movieTitle,
                     mainCast,
                     director,
                     language,
                     genre,
-                    rating
-                )
+                    rating,
+                })
             );
         }
+    };
+
+    const backHandler = (e) => {
+        e.preventDefault();
+        dispatch({ type: MOVIE_DETAILS_RESET });
+        history.push('/movielist');
     };
 
     return (
@@ -98,20 +125,9 @@ const MovieAddScreen = ({ history }) => {
                         <Col sm={10} className='admin-main-col'>
                             <Container>
                                 <Row className='add-movie-steps'>
-                                    <Col className='active-add add-btn'>
-                                        <h5>Step 1</h5>
+                                    <Col className='info-btn'>
                                         <i className='fas fa-video'></i>
                                         <p>Movie information</p>
-                                    </Col>
-                                    <Col className='inactive-add add-btn'>
-                                        <h5>Step 2</h5>
-                                        <i className='fas fa-ticket-alt'></i>
-                                        <p>Cinema information</p>
-                                    </Col>
-                                    <Col className='inactive-add add-btn'>
-                                        <h5>Step 3</h5>
-                                        <i className='fas fa-images'></i>
-                                        <p>Movie Posters</p>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -178,6 +194,14 @@ const MovieAddScreen = ({ history }) => {
                                                         }
                                                     />
                                                 </Form.Group>
+                                                <Button
+                                                    variant='primary'
+                                                    type='submit'
+                                                    className='form-submit'
+                                                    onClick={backHandler}
+                                                >
+                                                    Back
+                                                </Button>
                                             </Col>
                                             <Col>
                                                 <Form.Group controlId='formBasicEmail'>
@@ -253,4 +277,4 @@ const MovieAddScreen = ({ history }) => {
     );
 };
 
-export default MovieAddScreen;
+export default MovieEditScreen;

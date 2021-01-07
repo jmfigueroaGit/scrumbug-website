@@ -20,7 +20,8 @@ import UserEditScreen from './screens/AdminScreens/Users/UserEditScreen';
 import MovieListScreen from './screens/AdminScreens/Movie/MovieListScreen';
 import MovieAddScreen from './screens/AdminScreens/Movie/AddMovie/MovieAddScreen';
 import CinemaDetailScreen from './screens/AdminScreens/Movie/AddMovie/CinemaDetailScreen';
-
+import MovieEditScreen from './screens/AdminScreens/Movie/AddMovie/MovieEditScreen';
+import MovieAddPoster from './screens/AdminScreens/Movie/AddMovie/MovieAddPoster';
 const App = () => {
     return (
         <div className='App'>
@@ -60,6 +61,9 @@ const App = () => {
                             path='/cinema-add'
                             component={CinemaDetailScreen}
                         />
+                        <Route path='/poster-add/:id' component={MovieAddPoster} />
+
+                        <Route path='/movie/:id' component={MovieEditScreen} />
                     </Container>
                 </main>
 

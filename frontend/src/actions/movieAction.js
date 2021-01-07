@@ -23,6 +23,10 @@ import {
     COMING_LIST_SUCCESS,
     COMING_LIST_FAIL,
     MOVIE_LIST_RESET,
+    MOVIE_UPLOAD_REQUEST,
+    MOVIE_UPLOAD_SUCCESS,
+    MOVIE_UPLOAD_FAIL,
+    MOVIE_UPLOAD_RESET,
 } from '../constants/movieConstant';
 import { USER_LIST_RESET } from '../constants/userConstant';
 
@@ -129,7 +133,7 @@ export const addMovie = (
     startTime,
     endTime,
     status
-) => async (dispatch, getState) => {
+) => async (dispatch, getState, history) => {
     try {
         dispatch({
             type: MOVIE_ADD_REQUEST,
@@ -183,7 +187,7 @@ export const addMovie = (
     }
 };
 
-export const updateMovie = (user) => async (dispatch, getState) => {
+export const updateMovie = (movie) => async (dispatch, getState) => {
     try {
         dispatch({
             type: MOVIE_UPDATE_REQUEST,
@@ -201,12 +205,14 @@ export const updateMovie = (user) => async (dispatch, getState) => {
         };
 
         const { data } = await axios.put(
-            `/api/movies/${user._id}`,
-            user,
+            `/api/movies/${movie._id}`,
+            movie,
             config
         );
 
-        dispatch({ type: MOVIE_UPDATE_SUCCESS, payload: data });
+        dispatch({ type: MOVIE_UPDATE_SUCCESS });
+
+        dispatch({ type: MOVIE_DETAILS_SUCCESS, payload: data });
     } catch (error) {
         const message =
             error.response && error.response.data.message
@@ -227,10 +233,6 @@ export const getMovieDetails = (id) => async (dispatch, getState) => {
         dispatch({
             type: MOVIE_DETAILS_REQUEST,
         });
-
-        const {
-            movieDetails: { movie },
-        } = getState();
 
         const { data } = await axios.get(`/api/movies/${id}`);
 
@@ -260,7 +262,7 @@ export const checkMovie = (
     language,
     genre,
     rating
-) => async (dispatch, getState) => {
+) => async (dispatch, getState, history) => {
     try {
         dispatch({
             type: MOVIE_DETAILS_REQUEST,
@@ -293,6 +295,47 @@ export const checkMovie = (
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message,
+        });
+    }
+};
+
+export const uploadMoviePoster = (movie) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: MOVIE_UPLOAD_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.put(
+            `/api/movies/poster/${movie._id}`,
+            movie,
+            config
+        );
+
+        dispatch({ type: MOVIE_UPLOAD_SUCCESS });
+
+        dispatch({ type: MOVIE_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: MOVIE_UPLOAD_FAIL,
+            payload: message,
         });
     }
 };

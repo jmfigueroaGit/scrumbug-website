@@ -12,6 +12,7 @@ import {
     Dropdown,
     NavDropdown,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 const Header = () => {
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin);
@@ -30,13 +31,15 @@ const Header = () => {
                             <Row>
                                 <Col sm={9}>
                                     <Navbar.Brand>
-                                        <Image
-                                            src='/images/logo.png'
-                                            className='header-logo'
-                                        />{' '}
-                                        <span className='span-admin'>
-                                            | ADMIN
-                                        </span>
+                                        <Link to='/admin'>
+                                            <Image
+                                                src='/images/logo.png'
+                                                className='header-logo'
+                                            />{' '}
+                                            <span className='span-admin'>
+                                                | ADMIN
+                                            </span>
+                                        </Link>
                                     </Navbar.Brand>
                                 </Col>
                                 <Col sm={3}>
@@ -72,10 +75,12 @@ const Header = () => {
                             <Row>
                                 <Col sm={9}>
                                     <Navbar.Brand>
-                                        <Image
-                                            src='/images/logo.png'
-                                            className='header-logo'
-                                        />
+                                        <Link to='/home'>
+                                            <Image
+                                                src='/images/logo.png'
+                                                className='header-logo'
+                                            />
+                                        </Link>
                                     </Navbar.Brand>
                                 </Col>
                                 <Col sm={3}>
@@ -177,8 +182,7 @@ const Header = () => {
                                 </Col>
                                 <Col sm={3}>
                                     <div className='d-flex column-order'>
-                                        <h5>Wishlist</h5>
-                                        <i className='fas fa-shopping-cart'></i>
+                                        <i className='fas fa-shopping-cart cart-click'></i>
                                     </div>
                                 </Col>
                                 <Col sm={3}>
@@ -203,10 +207,12 @@ const Header = () => {
                     <Row className='w-100'>
                         <Col sm={10}>
                             <Navbar.Brand>
-                                <Image
-                                    src='/images/logo.png'
-                                    className='header-logo'
-                                />
+                                <Link to='/login'>
+                                    <Image
+                                        src='/images/logo.png'
+                                        className='header-logo'
+                                    />
+                                </Link>
                             </Navbar.Brand>
                         </Col>
                         <Col sm={2}>

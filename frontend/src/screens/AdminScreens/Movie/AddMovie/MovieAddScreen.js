@@ -236,8 +236,8 @@ const MovieAddScreen = ({ history }) => {
                                                         Rating
                                                     </Form.Label>
                                                     <Form.Control
-                                                        type='text'
-                                                        placeholder='Rating'
+                                                        type='number'
+                                                        placeholder='Maximum of 10 only'
                                                         className='form-control'
                                                         value={rating}
                                                         onChange={(e) =>

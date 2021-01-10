@@ -109,6 +109,7 @@ const MovieListScreen = ({ history }) => {
                                                 <td>{movie.genre}</td>
                                                 <td>{movie.director}</td>
                                                 <td>{movie.status}</td>
+                                                <td>{moviesList.length}</td>
                                                 <td>
                                                     <Link
                                                         to={`/movie/${movie._id}`}

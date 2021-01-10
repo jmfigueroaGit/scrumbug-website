@@ -224,7 +224,7 @@ export const updateMovie = (movie) => async (dispatch, getState) => {
     }
 };
 
-export const getMovieDetails = (id) => async (dispatch, getState) => {
+export const getMovieDetails = (id) => async (dispatch) => {
     try {
         dispatch({
             type: MOVIE_DETAILS_REQUEST,

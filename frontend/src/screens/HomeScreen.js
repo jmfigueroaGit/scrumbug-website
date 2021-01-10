@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Carousel, Col, Container, Row, Card } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listMovies } from '../actions/movieAction';
+import { getMovieDetails, listMovies } from '../actions/movieAction';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 const HomeScreen = () => {
@@ -18,19 +18,21 @@ const HomeScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
-            if (userInfo._id) {
-                dispatch(listMovies());
-            }
+            dispatch(listMovies());
         }
     }, [dispatch, userInfo]);
+
+    const movieScreen = (id) => {
+        dispatch(getMovieDetails(id));
+    };
 
     return (
         <div>
             {userInfo ? (
                 <div>
-                    {loading && <Loader>Loading</Loader>}
                     {movieList ? (
                         <Container fluid>
+                            {loading && <Loader>Loading</Loader>}
                             <Carousel>
                                 {moviesList?.map((movie) => (
                                     <Carousel.Item interval={2500}>
@@ -77,20 +79,32 @@ const HomeScreen = () => {
                                             </div>
                                             <Row>
                                                 <Col>
-                                                    <Button className='buy-ticket'>
-                                                        <i
-                                                            class='fas fa-ticket-alt '
-                                                            style={{
-                                                                padding: '5px',
-                                                            }}
-                                                        />
-                                                        Book a Ticket
-                                                    </Button>
+                                                    <Link
+                                                        to={`/movie-screen/${movie._id}`}
+                                                    >
+                                                        <Button
+                                                            className='buy-ticket'
+                                                            onClick={() =>
+                                                                movieScreen(
+                                                                    movie._id
+                                                                )
+                                                            }
+                                                        >
+                                                            <i
+                                                                class='fas fa-ticket-alt '
+                                                                style={{
+                                                                    padding:
+                                                                        '5px',
+                                                                }}
+                                                            />
+                                                            Book a Ticket
+                                                        </Button>
+                                                    </Link>
                                                 </Col>
                                                 <Col>
                                                     <Button className='wishlist'>
                                                         <i class='fas fa-grin-stars' />
-                                                        Add to Wishlist
+                                                        Watch Trailer
                                                     </Button>
                                                 </Col>
                                                 <Col></Col>
@@ -99,175 +113,133 @@ const HomeScreen = () => {
                                     </Carousel.Item>
                                 ))}
                             </Carousel>
-                            {moviesList?.map((movie) => (
-                                <div>
-                                    {movie.status === 'coming-soon' ? (
-                                        <Col>
-                                            <Row
-                                                style={{
-                                                    borderBottom:
-                                                        '2px solid #505050',
-                                                    padding: '0',
-                                                    margin: '0',
-                                                }}
-                                            >
-                                                <span
-                                                    style={{
-                                                        color: '#C4C4C4',
-                                                        fontSize: '25px',
-                                                        paddingTop: '5rem',
-                                                    }}
-                                                >
-                                                    <i class='fas fa-film mr-2'></i>
-                                                    Coming Soon
-                                                </span>
-                                            </Row>
-                                            <Row className='py-5'>
+                            <Col>
+                                <Row className='row-movie'>
+                                    <span>
+                                        <i class='fas fa-film mr-2'></i>
+                                        Now Showing
+                                    </span>
+                                </Row>
+
+                                <Row className='py-3'>
+                                    {moviesList?.map((movie) => (
+                                        <div>
+                                            {movie.status === 'now-showing' ? (
                                                 <Col xs={2} className='mr-1'>
-                                                    <Card
-                                                        style={{
-                                                            width: '18rem',
-                                                            backgroundColor:
-                                                                '#333333',
-                                                            border: 'none',
-                                                        }}
-                                                    >
+                                                    <Card className='card-movie'>
                                                         <Card.Img
                                                             variant='top'
                                                             src={movie.poster}
-                                                            style={{
-                                                                width: '180px',
-                                                                height: 'auto',
-                                                            }}
+                                                            className='card-image'
                                                         />
-                                                        <Card.Body
-                                                            style={{
-                                                                padding: '0',
-                                                                margin: '0',
-                                                            }}
-                                                        >
-                                                            <Card.Title
-                                                                style={{
-                                                                    color:
-                                                                        'white',
-                                                                    fontWeight:
-                                                                        'bold',
-                                                                    fontSize:
-                                                                        '18px',
-                                                                    paddingTop:
-                                                                        '1rem',
-                                                                }}
-                                                            >
+                                                        <div className='image-hover'>
+                                                            <div className='hover-content'>
+                                                                <Link
+                                                                    to={`/movie-screen/${movie._id}`}
+                                                                >
+                                                                    <Button
+                                                                        className='hover-button'
+                                                                        onClick={() =>
+                                                                            movieScreen(
+                                                                                movie._id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Book a
+                                                                        ticket
+                                                                    </Button>
+                                                                </Link>
+                                                                <Button className='hover-button'>
+                                                                    Watch
+                                                                    Trailer
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                        <Card.Body className='card-body'>
+                                                            <Card.Title className='card-title'>
                                                                 {
                                                                     movie.movieTitle
                                                                 }
                                                             </Card.Title>
-                                                            <Card.Text
-                                                                style={{
-                                                                    color:
-                                                                        'white',
-                                                                    fontWeight:
-                                                                        '100',
-                                                                }}
-                                                            >
+                                                            <Card.Text className='card-text'>
                                                                 {movie.genre}
                                                             </Card.Text>
                                                         </Card.Body>
                                                     </Card>
                                                 </Col>
-                                            </Row>
-                                        </Col>
-                                    ) : (
-                                        <span></span>
-                                    )}
-                                    {movie.status === 'now-showing' ? (
-                                        <Col>
-                                            <Row
-                                                style={{
-                                                    borderBottom:
-                                                        '2px solid #505050',
-                                                    padding: '0',
-                                                    margin: '0',
-                                                }}
-                                            >
-                                                <span
-                                                    style={{
-                                                        color: '#C4C4C4',
-                                                        fontSize: '25px',
-                                                        paddingTop: '5rem',
-                                                    }}
-                                                >
-                                                    <i class='fas fa-film mr-2'></i>
-                                                    Now Showing
-                                                </span>
-                                            </Row>
-                                            <Row className='py-5'>
+                                            ) : (
+                                                <span></span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </Row>
+                                <Row className='row-movie'>
+                                    <span>
+                                        <i class='fas fa-film mr-2'></i>
+                                        Coming Soon
+                                    </span>
+                                </Row>
+
+                                <Row className='py-3 pb-5'>
+                                    {moviesList?.map((movie) => (
+                                        <div>
+                                            {movie.status === 'coming-soon' ? (
                                                 <Col xs={2} className='mr-1'>
-                                                    <Card
-                                                        style={{
-                                                            width: '18rem',
-                                                            backgroundColor:
-                                                                '#333333',
-                                                            border: 'none',
-                                                        }}
-                                                    >
+                                                    <Card className='card-movie'>
                                                         <Card.Img
                                                             variant='top'
                                                             src={movie.poster}
-                                                            style={{
-                                                                width: '180px',
-                                                                height: 'auto',
-                                                            }}
+                                                            className='card-image'
                                                         />
-                                                        <Card.Body
-                                                            style={{
-                                                                padding: '0',
-                                                                margin: '0',
-                                                            }}
-                                                        >
-                                                            <Card.Title
-                                                                style={{
-                                                                    color:
-                                                                        'white',
-                                                                    fontWeight:
-                                                                        'bold',
-                                                                    fontSize:
-                                                                        '18px',
-                                                                    paddingTop:
-                                                                        '1rem',
-                                                                }}
-                                                            >
+                                                        <div className='image-hover'>
+                                                            <div className='hover-content'>
+                                                                <Link
+                                                                    to={`/movie-screen/${movie._id}`}
+                                                                >
+                                                                    <Button
+                                                                        className='hover-button'
+                                                                        onClick={() =>
+                                                                            movieScreen(
+                                                                                movie._id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Book a
+                                                                        ticket
+                                                                    </Button>
+                                                                </Link>
+                                                                <Button className='hover-button'>
+                                                                    Watch
+                                                                    Trailer
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                        <Card.Body className='card-body'>
+                                                            <Card.Title className='card-title'>
                                                                 {
                                                                     movie.movieTitle
                                                                 }
                                                             </Card.Title>
-                                                            <Card.Text
-                                                                style={{
-                                                                    color:
-                                                                        'white',
-                                                                    fontWeight:
-                                                                        '100',
-                                                                }}
-                                                            >
+                                                            <Card.Text className='card-text'>
                                                                 {movie.genre}
                                                             </Card.Text>
                                                         </Card.Body>
                                                     </Card>
                                                 </Col>
-                                            </Row>
-                                        </Col>
-                                    ) : (
-                                        <span></span>
-                                    )}
-                                </div>
-                            ))}
+                                            ) : (
+                                                <span></span>
+                                            )}
+                                        </div>
+                                    ))}
+                                </Row>
+                            </Col>
                         </Container>
                     ) : (
-                        <span></span>
+                        <Redirect to='/home'></Redirect>
                     )}
                 </div>
             ) : (
-                <span></span>
+                <Redirect to='/login'></Redirect>
             )}
         </div>
     );

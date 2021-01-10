@@ -108,7 +108,7 @@ const updateMovie = asyncHandler(async (req, res, next) => {
 // @access  Public
 const getMovies = asyncHandler(async (req, res, next) => {
     const movie = await Movie.find({});
-    res.json(movie);
+    res.json( movie );
 });
 
 // @desc    Delete a movie

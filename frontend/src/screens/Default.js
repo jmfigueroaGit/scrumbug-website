@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import {  Redirect, useHistory } from 'react-router-dom';
-import {  useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 
 const Default = () => {
     const history = useHistory();
 
-
     const userLogin = useSelector((state) => state.userLogin);
-    const { loading,  userInfo } = userLogin;
+    const { loading, userInfo } = userLogin;
 
     useEffect(() => {
         if (userInfo) {

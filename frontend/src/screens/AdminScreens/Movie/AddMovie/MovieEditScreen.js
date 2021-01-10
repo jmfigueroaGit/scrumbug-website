@@ -19,6 +19,7 @@ const MovieEditScreen = ({ history, match }) => {
     const [language, setLanguage] = useState('');
     const [genre, setGenre] = useState('');
     const [rating, setRating] = useState('');
+    const [movieSynopsis, setMovieSynopsis] = useState('');
     const [message, setMessage] = useState(null);
 
     const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const MovieEditScreen = ({ history, match }) => {
             setLanguage(movie.language);
             setGenre(movie.genre);
             setRating(movie.rating);
+            setMovieSynopsis(movie.movieSynopsis);
         }
     }, [dispatch, history, movieId, movie, successUpdate]);
 
@@ -58,7 +60,8 @@ const MovieEditScreen = ({ history, match }) => {
             director.length === 0 ||
             language.length === 0 ||
             genre.length === 0 ||
-            rating.length === 0
+            rating.length === 0 ||
+            movieSynopsis.length === 0
         ) {
             setMessage('Please fill in required fields');
         } else {
@@ -71,6 +74,7 @@ const MovieEditScreen = ({ history, match }) => {
                     language,
                     genre,
                     rating,
+                    movieSynopsis,
                 })
             );
         }
@@ -130,6 +134,14 @@ const MovieEditScreen = ({ history, match }) => {
                                         <p>Movie information</p>
                                     </Col>
                                 </Row>
+                                <Button
+                                    variant='primary'
+                                    type='submit'
+                                    className='form-submit'
+                                    onClick={backHandler}
+                                >
+                                    Back
+                                </Button>
                                 <Row>
                                     {message && (
                                         <div className='message-box add-movie-error'>
@@ -143,7 +155,7 @@ const MovieEditScreen = ({ history, match }) => {
                                             </Message>
                                         </div>
                                     )}
-                                    <Form className='mt-5 ml-5'>
+                                    <Form className='mt-1 ml-5'>
                                         <Row className='add-movie-form'>
                                             <Col>
                                                 <Form.Group controlId='formBasicEmail'>
@@ -194,14 +206,22 @@ const MovieEditScreen = ({ history, match }) => {
                                                         }
                                                     />
                                                 </Form.Group>
-                                                <Button
-                                                    variant='primary'
-                                                    type='submit'
-                                                    className='form-submit'
-                                                    onClick={backHandler}
-                                                >
-                                                    Back
-                                                </Button>
+                                                <Form.Group controlId='formBasicEmail'>
+                                                    <Form.Label className='form-label'>
+                                                        Movie Synopsis
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                        as='textarea'
+                                                        placeholder='Movie Synopsis'
+                                                        className='form-control-synopsis'
+                                                        value={movieSynopsis}
+                                                        onChange={(e) =>
+                                                            setMovieSynopsis(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </Form.Group>
                                             </Col>
                                             <Col>
                                                 <Form.Group controlId='formBasicEmail'>
@@ -256,10 +276,10 @@ const MovieEditScreen = ({ history, match }) => {
                                                     <Button
                                                         variant='primary'
                                                         type='submit'
-                                                        className='form-submit'
+                                                        className='form-submit mt-4 '
                                                         onClick={submitHandler}
                                                     >
-                                                        Submit
+                                                        Update
                                                     </Button>
                                                 </div>
                                             </Col>

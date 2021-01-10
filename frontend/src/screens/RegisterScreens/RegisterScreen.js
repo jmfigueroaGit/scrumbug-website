@@ -29,7 +29,9 @@ const RegisterScreen = () => {
 
     useEffect(() => {
         if (userInfo) {
-            history.push('/register-v1');
+            if (userInfo.fullName) {
+                history.push('/register-v1');
+            }
         }
     }, [history, userInfo]);
 

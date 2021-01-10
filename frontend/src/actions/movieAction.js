@@ -6,27 +6,21 @@ import {
     MOVIE_ADD_REQUEST,
     MOVIE_ADD_SUCCESS,
     MOVIE_ADD_FAIL,
-    MOVIE_ADD_RESET,
     MOVIE_UPDATE_REQUEST,
     MOVIE_UPDATE_SUCCESS,
     MOVIE_UPDATE_FAIL,
-    MOVIE_UPDATE_RESET,
     MOVIE_DELETE_REQUEST,
     MOVIE_DELETE_SUCCESS,
     MOVIE_DELETE_FAIL,
-    MOVIE_DELETE_RESET,
     MOVIE_DETAILS_REQUEST,
     MOVIE_DETAILS_SUCCESS,
     MOVIE_DETAILS_FAIL,
-    MOVIE_DETAILS_RESET,
     COMING_LIST_REQUEST,
     COMING_LIST_SUCCESS,
     COMING_LIST_FAIL,
-    MOVIE_LIST_RESET,
     MOVIE_UPLOAD_REQUEST,
     MOVIE_UPLOAD_SUCCESS,
     MOVIE_UPLOAD_FAIL,
-    MOVIE_UPLOAD_RESET,
 } from '../constants/movieConstant';
 import { USER_LIST_RESET } from '../constants/userConstant';
 
@@ -127,6 +121,7 @@ export const addMovie = (
     genre,
     duration,
     rating,
+    movieSynopsis,
     releasedDate,
     endScreening,
     cinemaNumber,
@@ -160,6 +155,7 @@ export const addMovie = (
                 genre,
                 duration,
                 rating,
+                movieSynopsis,
                 releasedDate,
                 endScreening,
                 cinemaNumber,
@@ -261,7 +257,8 @@ export const checkMovie = (
     director,
     language,
     genre,
-    rating
+    rating,
+    movieSynopsis
 ) => async (dispatch, getState, history) => {
     try {
         dispatch({
@@ -281,7 +278,15 @@ export const checkMovie = (
 
         const { data } = await axios.post(
             '/api/movies/check',
-            { movieTitle, mainCast, director, language, genre, rating },
+            {
+                movieTitle,
+                mainCast,
+                director,
+                language,
+                genre,
+                rating,
+                movieSynopsis,
+            },
             config
         );
         dispatch({

@@ -14,6 +14,7 @@ const addMovie = asyncHandler(async (req, res, next) => {
         genre,
         duration,
         rating,
+        movieSynopsis,
         releasedDate,
         endScreening,
         cinemaNumber,
@@ -36,6 +37,7 @@ const addMovie = asyncHandler(async (req, res, next) => {
         genre,
         duration,
         rating,
+        movieSynopsis,
         releasedDate,
         endScreening,
         cinemaNumber,
@@ -55,6 +57,7 @@ const addMovie = asyncHandler(async (req, res, next) => {
             genre: movie.genre,
             duration: movie.duration,
             rating: movie.rating,
+            movieSynopsis: movie.movieSynopsis,
             releasedDate: movie.releasedDate,
             endScreening: movie.endScreening,
             cinemaNumber: movie.cinemaNumber,
@@ -82,7 +85,7 @@ const updateMovie = asyncHandler(async (req, res, next) => {
         movie.language = req.body.language || movie.language;
         movie.genre = req.body.genre || movie.genre;
         movie.rating = req.body.rating || movie.rating;
-
+        movie.movieSynopsis = req.body.movieSynopsis || movie.movieSynopsis;
         const updatedMovie = await movie.save();
 
         res.json({
@@ -93,6 +96,7 @@ const updateMovie = asyncHandler(async (req, res, next) => {
             language: updatedMovie.language,
             genre: updatedMovie.genre,
             rating: updatedMovie.rating,
+            movieSynopsis: updatedMovie.movieSynopsis,
         });
     } else {
         return next(new ErrorResponse('Could not find movie', 400));
@@ -171,6 +175,7 @@ const checkMovie = asyncHandler(async (req, res) => {
         language,
         genre,
         rating,
+        movieSynopsis,
     } = req.body;
     const movie = await Movie.findOne({ movieTitle });
 
@@ -178,7 +183,15 @@ const checkMovie = asyncHandler(async (req, res) => {
         res.status(404);
         throw new Error('Movie is already exist');
     } else {
-        res.json({ movieTitle, mainCast, director, language, genre, rating });
+        res.json({
+            movieTitle,
+            mainCast,
+            director,
+            language,
+            genre,
+            rating,
+            movieSynopsis,
+        });
     }
 });
 

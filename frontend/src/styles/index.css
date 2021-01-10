@@ -266,6 +266,12 @@ main {
     width: 375px;
 }
 
+.form-control-synopsis {
+    width: 400px;
+    height: 300px;
+    position: absolute;
+}
+
 .form-label {
     color: #ffffff;
 }

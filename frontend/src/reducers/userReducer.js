@@ -6,6 +6,7 @@ import {
     USER_REGISTER_FAIL,
     USER_REGISTER_REQUEST,
     USER_REGISTER_SUCCESS,
+    USER_REGISTER_RESET,
     USER_EMAIL_AUTH_REQUEST,
     USER_EMAIL_AUTH_SUCCESS,
     USER_EMAIL_AUTH_FAIL,
@@ -66,6 +67,8 @@ export const userRegisterReducer = (state = {}, action) => {
             return { loading: false, userInfo: action.payload };
         case USER_REGISTER_FAIL:
             return { loading: false, error: action.payload };
+        case USER_REGISTER_RESET:
+            return { userInfo: {} };
         default:
             return state;
     }

@@ -25,6 +25,7 @@ const movieSchema = mongoose.Schema(
             type: String,
             enum: [
                 'Action',
+                'Adventure',
                 'Animation',
                 'Comedy',
                 'Crime',
@@ -46,6 +47,10 @@ const movieSchema = mongoose.Schema(
             required: [true, 'Duration field is required'],
         },
         rating: {
+            type: String,
+            required: true,
+        },
+        movieSynopsis: {
             type: String,
             required: true,
         },

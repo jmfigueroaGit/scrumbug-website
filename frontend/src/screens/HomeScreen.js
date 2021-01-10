@@ -1,624 +1,273 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Carousel, Col, Container, Row, Card } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { listMovies } from '../actions/movieAction';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 const HomeScreen = () => {
+    const [message, setMessage] = useState(null);
+
+    const dispatch = useDispatch();
+
     const userLogin = useSelector((state) => state.userLogin);
-    const { loading, error, userInfo } = userLogin;
+    const { userInfo } = userLogin;
+
+    const movieList = useSelector((state) => state.movieList);
+    const { loading, error, moviesList } = movieList;
+
+    useEffect(() => {
+        if (userInfo) {
+            if (userInfo._id) {
+                dispatch(listMovies());
+            }
+        }
+    }, [dispatch, userInfo]);
+
     return (
         <div>
             {userInfo ? (
-                <Container fluid>
-                    <Carousel>
-                        <Carousel.Item interval={2000}>
-                            <div>
-                                <img
-                                    className='image-slider'
-                                    src='https://img.cinemablend.com/filter:scale/quill/0/4/e/a/3/2/04ea32c2f31065db125758c973a5ff44adb45ff3.jpg?fw=1200'
-                                    alt='First slide'
-                                />
-                                <img
-                                    className=' image-slider-overlay'
-                                    src='/images/black.jpg'
-                                    alt='First slide'
-                                />
-                            </div>
-                            <Carousel.Caption className='slider-caption'>
-                                <h5>Duration: 2hours 58mins</h5>
-                                <Row>
-                                    <Col xs={3} className='review'>
-                                        <h5>
-                                            <i class='fas fa-star' />
-                                            9.5
-                                        </h5>
-                                    </Col>
-                                    <Col xs={3} className='rating'>
-                                        <h5>
-                                            <i
-                                                class='fa fa-film'
-                                                aria-hidden='true'
-                                            />{' '}
-                                            PG
-                                        </h5>
-                                    </Col>
-                                    <Col xs={6} className='rating'>
-                                        <h5>Action, Adventure, Sci-Fi</h5>
-                                    </Col>
-                                </Row>
-                                <div className='movie-title'>
-                                    <h1>Avengers: Endgame</h1>
-                                    <p>
-                                        Avengers: Infinity War is a 2018
-                                        American superhero film based on the
-                                        Marvel Comics superhero team the
-                                        Avengers, produced by Marvel Studios and
-                                        distributed by Walt Disney Studios
-                                        Motion Pictures.
-                                    </p>
-                                </div>
-                                <Row>
-                                    <Col>
-                                        <Button className='buy-ticket'>
-                                            <i
-                                                class='fas fa-ticket-alt '
-                                                style={{ padding: '5px' }}
+                <div>
+                    {loading && <Loader>Loading</Loader>}
+                    {movieList ? (
+                        <Container fluid>
+                            <Carousel>
+                                {moviesList?.map((movie) => (
+                                    <Carousel.Item interval={2500}>
+                                        <div>
+                                            <img
+                                                className='image-slider'
+                                                src={movie.banner}
+                                                alt='First slide'
                                             />
-                                            Book a Ticket
-                                        </Button>
-                                    </Col>
-                                    <Col>
-                                        <Button className='wishlist'>
-                                            <i class='fas fa-grin-stars' />
-                                            Add to Wishlist
-                                        </Button>
-                                    </Col>
-                                    <Col></Col>
-                                </Row>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item interval={2000}>
-                            <div>
-                                <img
-                                    className='image-slider'
-                                    src='https://media.socastsrm.com/wordpress/wp-content/blogs.dir/2166/files/2020/02/maxresdefault-2020-02-20T130910.982.jpg'
-                                    alt='First slide'
-                                />
-                                <img
-                                    className=' image-slider-overlay'
-                                    src='/images/black.jpg'
-                                    alt='First slide'
-                                />
-                            </div>
-                            <Carousel.Caption className='slider-caption'>
-                                <h5>Duration: 2hours 58mins</h5>
-                                <Row>
-                                    <Col xs={3} className='review'>
-                                        <h5>
-                                            <i class='fas fa-star' />
-                                            9.5
-                                        </h5>
-                                    </Col>
-                                    <Col xs={3} className='rating'>
-                                        <h5>
-                                            <i
-                                                class='fa fa-film'
-                                                aria-hidden='true'
-                                            />{' '}
-                                            PG
-                                        </h5>
-                                    </Col>
-                                    <Col xs={6} className='rating'>
-                                        <h5>Action, Adventure, Sci-Fi</h5>
-                                    </Col>
-                                </Row>
-                                <div className='movie-title'>
-                                    <h1> Mulan</h1>
-                                    <p>
-                                        To save her ailing father from serving
-                                        in the Imperial Army, a fearless young
-                                        woman disguises herself as a man to
-                                        battle northern invaders in China.
-                                    </p>
-                                </div>
-                                <Row>
-                                    <Col>
-                                        <Button className='buy-ticket'>
-                                            <i
-                                                class='fas fa-ticket-alt '
-                                                style={{ padding: '5px' }}
+                                            <img
+                                                className=' image-slider-overlay'
+                                                alt='First slide'
+                                                src='/images/black.jpg'
                                             />
-                                            Book a Ticket
-                                        </Button>
-                                    </Col>
-                                    <Col>
-                                        <Button className='wishlist'>
-                                            <i class='fas fa-grin-stars' />
-                                            Add to Wishlist
-                                        </Button>
-                                    </Col>
-                                    <Col></Col>
-                                </Row>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                    </Carousel>
-
-                    {/*Body */}
-                    <Container fluid>
-                        <Col>
-                            <Row
-                                style={{
-                                    borderBottom: '2px solid #505050',
-                                    padding: '0',
-                                    margin: '0',
-                                }}
-                            >
-                                <span
-                                    style={{
-                                        color: '#C4C4C4',
-                                        fontSize: '25px',
-                                        paddingTop: '5rem',
-                                    }}
-                                >
-                                    <i class='fas fa-film mr-2'></i>
-                                    Now Showing
-                                </span>
-                            </Row>
-                            <Row className='py-5'>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
+                                        </div>
+                                        <Carousel.Caption className='slider-caption'>
+                                            <h5>
+                                                Duration: {movie.duration}{' '}
+                                                minutes
+                                            </h5>
+                                            <Row>
+                                                <Col xs={3} className='review'>
+                                                    <h5>
+                                                        <i class='fas fa-star' />
+                                                        {movie.rating}
+                                                    </h5>
+                                                </Col>
+                                                <Col xs={3} className='rating'>
+                                                    <h5>
+                                                        <i
+                                                            class='fa fa-film'
+                                                            aria-hidden='true'
+                                                        />{' '}
+                                                        {movie.language}
+                                                    </h5>
+                                                </Col>
+                                                <Col xs={6} className='rating'>
+                                                    <h5>{movie.genre}</h5>
+                                                </Col>
+                                            </Row>
+                                            <div className='movie-title'>
+                                                <h1>{movie.movieTitle}</h1>
+                                                <p>{movie.movieSynopsis}</p>
+                                            </div>
+                                            <Row>
+                                                <Col>
+                                                    <Button className='buy-ticket'>
+                                                        <i
+                                                            class='fas fa-ticket-alt '
+                                                            style={{
+                                                                padding: '5px',
+                                                            }}
+                                                        />
+                                                        Book a Ticket
+                                                    </Button>
+                                                </Col>
+                                                <Col>
+                                                    <Button className='wishlist'>
+                                                        <i class='fas fa-grin-stars' />
+                                                        Add to Wishlist
+                                                    </Button>
+                                                </Col>
+                                                <Col></Col>
+                                            </Row>
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                ))}
+                            </Carousel>
+                            {moviesList?.map((movie) => (
+                                <div>
+                                    {movie.status === 'coming-soon' ? (
+                                        <Col>
+                                            <Row
                                                 style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
+                                                    borderBottom:
+                                                        '2px solid #505050',
+                                                    padding: '0',
+                                                    margin: '0',
                                                 }}
                                             >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
+                                                <span
+                                                    style={{
+                                                        color: '#C4C4C4',
+                                                        fontSize: '25px',
+                                                        paddingTop: '5rem',
+                                                    }}
+                                                >
+                                                    <i class='fas fa-film mr-2'></i>
+                                                    Coming Soon
+                                                </span>
+                                            </Row>
+                                            <Row className='py-5'>
+                                                <Col xs={2} className='mr-1'>
+                                                    <Card
+                                                        style={{
+                                                            width: '18rem',
+                                                            backgroundColor:
+                                                                '#333333',
+                                                            border: 'none',
+                                                        }}
+                                                    >
+                                                        <Card.Img
+                                                            variant='top'
+                                                            src={movie.poster}
+                                                            style={{
+                                                                width: '180px',
+                                                                height: 'auto',
+                                                            }}
+                                                        />
+                                                        <Card.Body
+                                                            style={{
+                                                                padding: '0',
+                                                                margin: '0',
+                                                            }}
+                                                        >
+                                                            <Card.Title
+                                                                style={{
+                                                                    color:
+                                                                        'white',
+                                                                    fontWeight:
+                                                                        'bold',
+                                                                    fontSize:
+                                                                        '18px',
+                                                                    paddingTop:
+                                                                        '1rem',
+                                                                }}
+                                                            >
+                                                                {
+                                                                    movie.movieTitle
+                                                                }
+                                                            </Card.Title>
+                                                            <Card.Text
+                                                                style={{
+                                                                    color:
+                                                                        'white',
+                                                                    fontWeight:
+                                                                        '100',
+                                                                }}
+                                                            >
+                                                                {movie.genre}
+                                                            </Card.Text>
+                                                        </Card.Body>
+                                                    </Card>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    ) : (
+                                        <span></span>
+                                    )}
+                                    {movie.status === 'now-showing' ? (
+                                        <Col>
+                                            <Row
                                                 style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
+                                                    borderBottom:
+                                                        '2px solid #505050',
+                                                    padding: '0',
+                                                    margin: '0',
                                                 }}
                                             >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Row>
-                            <Row
-                                style={{
-                                    borderBottom: '2px solid #505050',
-                                    padding: '0',
-                                    margin: '0',
-                                }}
-                            >
-                                <span
-                                    style={{
-                                        color: '#C4C4C4',
-                                        fontSize: '25px',
-                                    }}
-                                >
-                                    <i class='fas fa-film mr-2'></i>
-                                    Coming Soon
-                                </span>
-                            </Row>
-                            <Row className='py-5'>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                                <Col xs={2} className='mr-1'>
-                                    <Card
-                                        style={{
-                                            width: '18rem',
-                                            backgroundColor: '#333333',
-                                            border: 'none',
-                                        }}
-                                    >
-                                        <Card.Img
-                                            variant='top'
-                                            src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                            style={{
-                                                width: '180px',
-                                                height: 'auto',
-                                            }}
-                                        />
-                                        <Card.Body
-                                            style={{
-                                                padding: '0',
-                                                margin: '0',
-                                            }}
-                                        >
-                                            <Card.Title
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '18px',
-                                                    paddingTop: '1rem',
-                                                }}
-                                            >
-                                                Avengers: Endgame
-                                            </Card.Title>
-                                            <Card.Text
-                                                style={{
-                                                    color: 'white',
-                                                    fontWeight: '100',
-                                                }}
-                                            >
-                                                Action, Adventure, Sci-Fi
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Container>
-                </Container>
+                                                <span
+                                                    style={{
+                                                        color: '#C4C4C4',
+                                                        fontSize: '25px',
+                                                        paddingTop: '5rem',
+                                                    }}
+                                                >
+                                                    <i class='fas fa-film mr-2'></i>
+                                                    Now Showing
+                                                </span>
+                                            </Row>
+                                            <Row className='py-5'>
+                                                <Col xs={2} className='mr-1'>
+                                                    <Card
+                                                        style={{
+                                                            width: '18rem',
+                                                            backgroundColor:
+                                                                '#333333',
+                                                            border: 'none',
+                                                        }}
+                                                    >
+                                                        <Card.Img
+                                                            variant='top'
+                                                            src={movie.poster}
+                                                            style={{
+                                                                width: '180px',
+                                                                height: 'auto',
+                                                            }}
+                                                        />
+                                                        <Card.Body
+                                                            style={{
+                                                                padding: '0',
+                                                                margin: '0',
+                                                            }}
+                                                        >
+                                                            <Card.Title
+                                                                style={{
+                                                                    color:
+                                                                        'white',
+                                                                    fontWeight:
+                                                                        'bold',
+                                                                    fontSize:
+                                                                        '18px',
+                                                                    paddingTop:
+                                                                        '1rem',
+                                                                }}
+                                                            >
+                                                                {
+                                                                    movie.movieTitle
+                                                                }
+                                                            </Card.Title>
+                                                            <Card.Text
+                                                                style={{
+                                                                    color:
+                                                                        'white',
+                                                                    fontWeight:
+                                                                        '100',
+                                                                }}
+                                                            >
+                                                                {movie.genre}
+                                                            </Card.Text>
+                                                        </Card.Body>
+                                                    </Card>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    ) : (
+                                        <span></span>
+                                    )}
+                                </div>
+                            ))}
+                        </Container>
+                    ) : (
+                        <span></span>
+                    )}
+                </div>
             ) : (
-                <Redirect to='/login'></Redirect>
+                <span></span>
             )}
         </div>
     );

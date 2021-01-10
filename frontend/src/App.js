@@ -12,7 +12,7 @@ import AuthEmail from './screens/ForgotPasswordScreens/AuthEmail';
 import Authentication1 from './screens/ForgotPasswordScreens/Authentication_1';
 import Authentication2 from './screens/ForgotPasswordScreens/Authentication_2';
 import Authentication3 from './screens/ForgotPasswordScreens/Authentication_3';
-import ChangePassword from './screens/RegisterScreens/ChangePassword';
+import ChangePassword from './screens/ForgotPasswordScreens/ChangePassword';
 import HomeScreen from './screens/HomeScreen';
 import Admin from './screens/AdminScreens/Admin';
 import UserListScreen from './screens/AdminScreens/Users/UserListScreen';
@@ -22,13 +22,17 @@ import MovieAddScreen from './screens/AdminScreens/Movie/AddMovie/MovieAddScreen
 import CinemaDetailScreen from './screens/AdminScreens/Movie/AddMovie/CinemaDetailScreen';
 import MovieEditScreen from './screens/AdminScreens/Movie/AddMovie/MovieEditScreen';
 import MovieAddPoster from './screens/AdminScreens/Movie/AddMovie/MovieAddPoster';
+import Default from './screens/Default';
 const App = () => {
+    
+
     return (
         <div className='App'>
             <Router>
                 <Header />
                 <main>
                     <Container fluid>
+                        <Route path='/' component={Default} />
                         <Route path='/login' component={LoginScreen} />
                         <Route path='/register' component={RegisterScreen} />
                         <Route
@@ -61,7 +65,10 @@ const App = () => {
                             path='/cinema-add'
                             component={CinemaDetailScreen}
                         />
-                        <Route path='/poster-add/:id' component={MovieAddPoster} />
+                        <Route
+                            path='/poster-add/:id'
+                            component={MovieAddPoster}
+                        />
 
                         <Route path='/movie/:id' component={MovieEditScreen} />
                     </Container>

@@ -12,6 +12,7 @@ const MovieAddScreen = ({ history }) => {
     const [language, setLanguage] = useState('');
     const [genre, setGenre] = useState('');
     const [rating, setRating] = useState('');
+    const [movieSynopsis, setMovieSynopsis] = useState('');
     const [message, setMessage] = useState(null);
 
     const dispatch = useDispatch();
@@ -38,7 +39,8 @@ const MovieAddScreen = ({ history }) => {
             director.length === 0 ||
             language.length === 0 ||
             genre.length === 0 ||
-            rating.length === 0
+            rating.length === 0 ||
+            movieSynopsis.length === 0
         ) {
             setMessage('Please fill in required fields');
         } else {
@@ -49,7 +51,8 @@ const MovieAddScreen = ({ history }) => {
                     director,
                     language,
                     genre,
-                    rating
+                    rating,
+                    movieSynopsis
                 )
             );
         }
@@ -127,7 +130,7 @@ const MovieAddScreen = ({ history }) => {
                                             </Message>
                                         </div>
                                     )}
-                                    <Form className='mt-5 ml-5'>
+                                    <Form className='mt-1 ml-5'>
                                         <Row className='add-movie-form'>
                                             <Col>
                                                 <Form.Group controlId='formBasicEmail'>
@@ -173,6 +176,22 @@ const MovieAddScreen = ({ history }) => {
                                                         value={director}
                                                         onChange={(e) =>
                                                             setDirector(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </Form.Group>
+                                                <Form.Group controlId='formBasicEmail'>
+                                                    <Form.Label className='form-label'>
+                                                        Movie Synopsis
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                        as='textarea'
+                                                        placeholder='Movie Synopsis'
+                                                        className='form-control-synopsis'
+                                                        value={movieSynopsis}
+                                                        onChange={(e) =>
+                                                            setMovieSynopsis(
                                                                 e.target.value
                                                             )
                                                         }

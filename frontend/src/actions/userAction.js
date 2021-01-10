@@ -29,7 +29,6 @@ import {
     USER_LIST_FAIL,
     USER_LIST_REQUEST,
     USER_LIST_SUCCESS,
-    USER_LIST_RESET,
     USER_DETAILS_FAIL,
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
@@ -37,6 +36,7 @@ import {
     USER_UPDATE_FAIL,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_REQUEST,
+    USER_REGISTER_RESET,
 } from '../constants/userConstant';
 
 export const login = (email, password) => async (dispatch) => {
@@ -241,7 +241,7 @@ export const securityQuestion3 = (
             type: USER_AUTHENTICATION_v3_SUCCESS,
             payload: data,
         });
-
+        dispatch({ type: USER_REGISTER_RESET });
         dispatch({ type: USER_AUTHENTICATION_v1_RESET });
         dispatch({ type: USER_AUTHENTICATION_v2_RESET });
         dispatch({ type: USER_AUTHENTICATION_v3_RESET });
@@ -520,11 +520,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.put(
-            `/api/user/${user._id}`,
-            user,
-            config
-        );
+        const { data } = await axios.put(`/api/user/${user._id}`, user, config);
 
         dispatch({ type: USER_UPDATE_SUCCESS });
 

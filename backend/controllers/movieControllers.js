@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Movie from '../models/movieModel.js';
+import Seat from '../models/seatModel.js';
 import ErrorResponse from '../utils/errorResponse.js';
 
 // @desc    ADD movie
@@ -45,6 +46,7 @@ const addMovie = asyncHandler(async (req, res, next) => {
         endTime,
         status,
     });
+    //     const seat = await Seat.create({movie._id});
 
     if (movie) {
         res.status(201).json({
@@ -108,7 +110,8 @@ const updateMovie = asyncHandler(async (req, res, next) => {
 // @access  Public
 const getMovies = asyncHandler(async (req, res, next) => {
     const movie = await Movie.find({});
-    res.json( movie );
+    const seat = await Seat.find({});
+    res.json(movie);
 });
 
 // @desc    Delete a movie
@@ -118,6 +121,7 @@ const deleteMovie = asyncHandler(async (req, res, next) => {
     const movie = await Movie.findById(req.params.id);
 
     if (movie) {
+        await Seat.findOneAndDelete({ movie: req.params.id });
         await movie.remove();
         res.json({ message: 'Movie removed' });
     } else {
@@ -204,13 +208,14 @@ const uploadMoviePoster = asyncHandler(async (req, res, next) => {
     if (movie) {
         movie.poster = req.body.poster || movie.poster;
         movie.banner = req.body.banner || movie.banner;
-
+        const seat = await Seat.create({ movie: movie._id });
         const updatedMovie = await movie.save();
 
         res.json({
             _id: updatedMovie._id,
             poster: updatedMovie.poster,
             banner: updatedMovie.banner,
+            seat,
         });
     } else {
         return next(new ErrorResponse('Could not find movie', 400));

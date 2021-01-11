@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button, Carousel, Col, Container, Row, Card } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMovieDetails, listMovies } from '../actions/movieAction';
+import {
+    getMovieDetails,
+    getSeatDetails,
+    listMovies,
+} from '../actions/movieAction';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 const HomeScreen = () => {
@@ -24,6 +28,7 @@ const HomeScreen = () => {
 
     const movieScreen = (id) => {
         dispatch(getMovieDetails(id));
+        dispatch(getSeatDetails(id));
     };
 
     return (
@@ -35,7 +40,10 @@ const HomeScreen = () => {
                             {loading && <Loader>Loading</Loader>}
                             <Carousel>
                                 {moviesList?.map((movie) => (
-                                    <Carousel.Item interval={2500}>
+                                    <Carousel.Item
+                                        interval={2500}
+                                        key={movie._id}
+                                    >
                                         <div>
                                             <img
                                                 className='image-slider'
@@ -56,14 +64,14 @@ const HomeScreen = () => {
                                             <Row>
                                                 <Col xs={3} className='review'>
                                                     <h5>
-                                                        <i class='fas fa-star' />
+                                                        <i className='fas fa-star' />
                                                         {movie.rating}
                                                     </h5>
                                                 </Col>
                                                 <Col xs={3} className='rating'>
                                                     <h5>
                                                         <i
-                                                            class='fa fa-film'
+                                                            className='fa fa-film'
                                                             aria-hidden='true'
                                                         />{' '}
                                                         {movie.language}
@@ -91,7 +99,7 @@ const HomeScreen = () => {
                                                             }
                                                         >
                                                             <i
-                                                                class='fas fa-ticket-alt '
+                                                                className='fas fa-ticket-alt '
                                                                 style={{
                                                                     padding:
                                                                         '5px',
@@ -103,7 +111,7 @@ const HomeScreen = () => {
                                                 </Col>
                                                 <Col>
                                                     <Button className='wishlist'>
-                                                        <i class='fas fa-grin-stars' />
+                                                        <i className='fas fa-grin-stars' />
                                                         Watch Trailer
                                                     </Button>
                                                 </Col>
@@ -116,14 +124,14 @@ const HomeScreen = () => {
                             <Col>
                                 <Row className='row-movie'>
                                     <span>
-                                        <i class='fas fa-film mr-2'></i>
+                                        <i className='fas fa-film mr-2'></i>
                                         Now Showing
                                     </span>
                                 </Row>
 
                                 <Row className='py-3'>
                                     {moviesList?.map((movie) => (
-                                        <div>
+                                        <div key={movie._id}>
                                             {movie.status === 'now-showing' ? (
                                                 <Col xs={2} className='mr-1'>
                                                     <Card className='card-movie'>
@@ -175,14 +183,14 @@ const HomeScreen = () => {
                                 </Row>
                                 <Row className='row-movie'>
                                     <span>
-                                        <i class='fas fa-film mr-2'></i>
+                                        <i className='fas fa-film mr-2'></i>
                                         Coming Soon
                                     </span>
                                 </Row>
 
                                 <Row className='py-3 pb-5'>
                                     {moviesList?.map((movie) => (
-                                        <div>
+                                        <div key={movie._id}>
                                             {movie.status === 'coming-soon' ? (
                                                 <Col xs={2} className='mr-1'>
                                                     <Card className='card-movie'>

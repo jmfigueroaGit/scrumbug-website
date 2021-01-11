@@ -9,6 +9,7 @@ import {
     checkMovie,
     uploadMoviePoster,
 } from '../controllers/movieControllers.js';
+import { findSeat, updateSeat } from '../controllers/seatController.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
 
 const router = express();
@@ -25,5 +26,5 @@ router
     .put(protect, admin, updateMovie)
     .delete(protect, admin, deleteMovie);
 router.route('/poster/:id').put(protect, admin, uploadMoviePoster);
-
+router.route('/seat/:id').get(findSeat).put(updateSeat);
 export default router;

@@ -19,9 +19,9 @@ import {
     movieUpdateReducer,
     movieDeleteReducer,
     movieDetailsReducer,
-    movieNowReducer,
-    movieComingReducer,
     movieUploadReducer,
+    seatListReducer,
+    seatUpdateReducer,
 } from './reducers/movieReducer';
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -40,9 +40,9 @@ const reducer = combineReducers({
     movieUpdate: movieUpdateReducer,
     movieDelete: movieDeleteReducer,
     movieDetails: movieDetailsReducer,
-    movieNow: movieNowReducer,
-    movieComing: movieComingReducer,
     movieUpload: movieUploadReducer,
+    seatList: seatListReducer,
+    seatUpdate: seatUpdateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

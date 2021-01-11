@@ -21,6 +21,13 @@ import {
     MOVIE_UPLOAD_REQUEST,
     MOVIE_UPLOAD_SUCCESS,
     MOVIE_UPLOAD_FAIL,
+    MOVIE_SEAT_REQUEST,
+    MOVIE_SEAT_SUCCESS,
+    MOVIE_SEAT_FAIL,
+    MOVIE_SEAT_UPDATE_REQUEST,
+    MOVIE_SEAT_UPDATE_SUCCESS,
+    MOVIE_SEAT_UPDATE_FAIL,
+    MOVIE_SEAT_UPDATE_RESET,
 } from '../constants/movieConstant';
 import { USER_LIST_RESET } from '../constants/userConstant';
 
@@ -340,6 +347,72 @@ export const uploadMoviePoster = (movie) => async (dispatch, getState) => {
         }
         dispatch({
             type: MOVIE_UPLOAD_FAIL,
+            payload: message,
+        });
+    }
+};
+
+export const getSeatDetails = (id) => async (dispatch) => {
+    try {
+        dispatch({
+            type: MOVIE_SEAT_REQUEST,
+        });
+
+        const { data } = await axios.get(`/api/movies/seat/${id}`);
+
+        dispatch({
+            type: MOVIE_SEAT_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: MOVIE_SEAT_FAIL,
+            payload: message,
+        });
+    }
+};
+
+export const updateSeat = (seat) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: MOVIE_SEAT_UPDATE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.put(
+            `/api/movies/seat/${seat.movie}`,
+            seat,
+            config
+        );
+
+        dispatch({ type: MOVIE_SEAT_UPDATE_SUCCESS, payload: data });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: MOVIE_SEAT_UPDATE_FAIL,
             payload: message,
         });
     }

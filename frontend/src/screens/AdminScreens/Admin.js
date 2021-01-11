@@ -31,9 +31,13 @@ const Admin = ({ history }) => {
             {userInfo ? (
                 <div>
                     {moviesList?.map((movie) => (
-                        <div>
+                        <div key={movie._id}>
                             {users?.map((user) => (
-                                <Container fluid className='admin-main'>
+                                <Container
+                                    fluid
+                                    className='admin-main'
+                                    key={user._id}
+                                >
                                     <Row className='h-100'>
                                         <Col sm={2} className='admin-sidebar'>
                                             <ListGroup

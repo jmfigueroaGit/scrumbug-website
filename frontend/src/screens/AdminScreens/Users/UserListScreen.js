@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Col, Container, ListGroup, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, ListGroup, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { listUsers, getUserDetails } from '../../../actions/userAction';
@@ -133,7 +133,7 @@ const UserListScreen = ({ history }) => {
                                                     )}
                                                 </td>
                                                 <td>
-                                                    <Link
+                                                    <div
                                                         className='user-edit'
                                                         onClick={() =>
                                                             editHandler(
@@ -142,7 +142,7 @@ const UserListScreen = ({ history }) => {
                                                         }
                                                     >
                                                         <i className='fas fa-user-edit'></i>
-                                                    </Link>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}

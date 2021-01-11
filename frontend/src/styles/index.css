@@ -735,6 +735,72 @@ main {
 }
 
 .single-row1 {
-    padding-bottom: 2rem;
+    padding-bottom: 3rem;
     border-bottom: 1px solid #202020;
+}
+
+.back-button {
+    margin-top: 1.5rem;
+    margin-left: 2rem;
+}
+
+
+/* Cinema chart */
+
+.cinema-seat {
+    width: 100%;
+    margin-right: 43rem;
+    padding-bottom: 3rem;
+}
+
+.cinema-screen {
+    margin-left: 18.5rem;
+    padding-top: 25px;
+    padding-bottom: 1rem;
+}
+
+.main-screen {
+    color: white;
+    font-weight: 400;
+    padding: 0 10rem;
+    padding-bottom: 0.3rem;
+    border-bottom: #d4d4d4 5px solid;
+}
+
+.row-seat {
+    height: 45px;
+    margin-top: 1.5rem;
+    margin-left: 7rem;
+}
+
+.seat-row {
+    display: flex;
+}
+
+.seat-guide {
+    background-color: rgb(26, 26, 26);
+    height: 2rem;
+    text-align: center;
+    margin-left: 35px;
+    padding: 1rem 1rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+}
+
+.seat-guide:hover {
+    background-color: rgb(177, 14, 14);
+}
+
+.seat-place {
+    position: absolute;
+    color: rgb(255, 255, 255);
+    font-size: 10px;
+    font-weight: 400;
+    margin-top: -0.7rem;
+    margin-left: -0.4rem;
+}
+
+.sample-bg {
+    border-right: #000000 1px solid;
 }

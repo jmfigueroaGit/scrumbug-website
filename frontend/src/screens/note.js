@@ -1,150 +1,363 @@
-
-                            <Row
-                                    style={{
-                                        borderBottom: '2px solid #505050',
-                                        padding: '0',
-                                        margin: '0',
-                                    }}
-                                >
-                                    <span
-                                        style={{
-                                            color: '#C4C4C4',
-                                            fontSize: '25px',
-                                        }}
-                                    >
-                                        <i class='fas fa-film mr-2'></i>
-                                        Coming Soon
-                                    </span>
-                                </Row>
-                                <Row className='py-5'>
-                                    <Col xs={2} className='mr-1'>
-                                        <Card
-                                            style={{
-                                                width: '18rem',
-                                                backgroundColor: '#333333',
-                                                border: 'none',
-                                            }}
-                                        >
-                                            <Card.Img
-                                                variant='top'
-                                                src='https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/d1pklzbuyaab0la-1552597012.jpg'
-                                                style={{
-                                                    width: '180px',
-                                                    height: 'auto',
-                                                }}
-                                            />
-                                            <Card.Body
-                                                style={{
-                                                    padding: '0',
-                                                    margin: '0',
-                                                }}
-                                            >
-                                                <Card.Title
-                                                    style={{
-                                                        color: 'white',
-                                                        fontWeight: 'bold',
-                                                        fontSize: '18px',
-                                                        paddingTop: '1rem',
-                                                    }}
-                                                >
-                                                    Avengers: Endgame
-                                                </Card.Title>
-                                                <Card.Text
-                                                    style={{
-                                                        color: 'white',
-                                                        fontWeight: '100',
-                                                    }}
-                                                >
-                                                    Action, Adventure, Sci-Fi
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                </Row>
-
-
-
- {/* {movie.status === 'coming-soon' ? (
-                                        <Col>
-                                            <Row
-                                                style={{
-                                                    borderBottom:
-                                                        '2px solid #505050',
-                                                    padding: '0',
-                                                    margin: '0',
-                                                }}
-                                            >
-                                                <span
-                                                    style={{
-                                                        color: '#C4C4C4',
-                                                        fontSize: '25px',
-                                                        paddingTop: '5rem',
-                                                    }}
-                                                >
-                                                    <i class='fas fa-film mr-2'></i>
-                                                    Coming Soon
-                                                </span>
-                                            </Row>
-                                            <Row className='py-5'>
-                                                <Col xs={2} className='mr-1'>
-                                                    <Card
-                                                        style={{
-                                                            width: '18rem',
-                                                            backgroundColor:
-                                                                '#333333',
-                                                            border: 'none',
-                                                        }}
-                                                    >
-                                                        <Card.Img
-                                                            variant='top'
-                                                            src={movie.poster}
-                                                            style={{
-                                                                width: '180px',
-                                                                height: 'auto',
-                                                            }}
-                                                        />
-                                                        <Card.Body
-                                                            style={{
-                                                                padding: '0',
-                                                                margin: '0',
-                                                            }}
+    <div>
+                                                    {seats?.A2?.status !==
+                                                    'available' ? (
+                                                        <Button
+                                                            style={
+                                                                theme.available
+                                                            }
+                                                            className='seat-guide'
+                                                            id='ads'
+                                                            onClick={
+                                                                submitHandlerA2
+                                                            }
                                                         >
-                                                            <Card.Title
-                                                                style={{
-                                                                    color:
-                                                                        'white',
-                                                                    fontWeight:
-                                                                        'bold',
-                                                                    fontSize:
-                                                                        '18px',
-                                                                    paddingTop:
-                                                                        '1rem',
-                                                                }}
-                                                            >
-                                                                {
-                                                                    movie.movieTitle
-                                                                }
-                                                            </Card.Title>
-                                                            <Card.Text
-                                                                style={{
-                                                                    color:
-                                                                        'white',
-                                                                    fontWeight:
-                                                                        '100',
-                                                                }}
-                                                            >
-                                                                {movie.genre}
-                                                            </Card.Text>
-                                                        </Card.Body>
-                                                    </Card>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    ) : (
-                                        <span></span>
-                                    )} */}
-
-
-
-
-
+                                                            <span className='seat-place'>
+                                                                A2
+                                                            </span>
+                                                        </Button>
+                                                    ) : (
+                                                        <div>
+                                                            {clickA2 ===
+                                                            true ? (
+                                                                (total += prize) &&
+                                                                (show += A2) && (
+                                                                    <Button
+                                                                        style={
+                                                                            theme.select
+                                                                        }
+                                                                        className='seat-guide'
+                                                                        id='ads'
+                                                                    >
+                                                                        <span className='seat-place'>
+                                                                            {A2}
+                                                                        </span>
+                                                                    </Button>
+                                                                )
+                                                            ) : (
+                                                                <Button
+                                                                    className='seat-guide'
+                                                                    id='ads'
+                                                                    onClick={
+                                                                        submitHandlerA2
+                                                                    }
+                                                                >
+                                                                    <span className='seat-place'>
+                                                                        A2
+                                                                    </span>
+                                                                </Button>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {' '}
+                                                    {seats?.A3?.status !==
+                                                    'available' ? (
+                                                        <Button
+                                                            style={
+                                                                theme.available
+                                                            }
+                                                            className='seat-guide'
+                                                            id='ads'
+                                                            onClick={
+                                                                submitHandlerA3
+                                                            }
+                                                        >
+                                                            <span className='seat-place'>
+                                                                A3
+                                                            </span>
+                                                        </Button>
+                                                    ) : (
+                                                        <div>
+                                                            {clickA3 ===
+                                                            true ? (
+                                                                (total += prize) &&
+                                                                (show += A3) && (
+                                                                    <Button
+                                                                        style={
+                                                                            theme.select
+                                                                        }
+                                                                        className='seat-guide'
+                                                                        id='ads'
+                                                                    >
+                                                                        <span className='seat-place'>
+                                                                            {A3}
+                                                                        </span>
+                                                                    </Button>
+                                                                )
+                                                            ) : (
+                                                                <Button
+                                                                    className='seat-guide'
+                                                                    id='ads'
+                                                                    onClick={
+                                                                        submitHandlerA3
+                                                                    }
+                                                                >
+                                                                    <span className='seat-place'>
+                                                                        A3
+                                                                    </span>
+                                                                </Button>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {' '}
+                                                    {seats?.A4?.status !==
+                                                    'available' ? (
+                                                        <Button
+                                                            style={
+                                                                theme.available
+                                                            }
+                                                            className='seat-guide'
+                                                            id='ads'
+                                                            onClick={
+                                                                submitHandlerA4
+                                                            }
+                                                        >
+                                                            <span className='seat-place'>
+                                                                A4
+                                                            </span>
+                                                        </Button>
+                                                    ) : (
+                                                        <div>
+                                                            {clickA4 ===
+                                                            true ? (
+                                                                (total += prize) &&
+                                                                (show += A4) && (
+                                                                    <Button
+                                                                        style={
+                                                                            theme.select
+                                                                        }
+                                                                        className='seat-guide'
+                                                                        id='ads'
+                                                                    >
+                                                                        <span className='seat-place'>
+                                                                            {A4}
+                                                                        </span>
+                                                                    </Button>
+                                                                )
+                                                            ) : (
+                                                                <Button
+                                                                    className='seat-guide'
+                                                                    id='ads'
+                                                                    onClick={
+                                                                        submitHandlerA4
+                                                                    }
+                                                                >
+                                                                    <span className='seat-place'>
+                                                                        A4
+                                                                    </span>
+                                                                </Button>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {' '}
+                                                    {seats?.A5?.status !==
+                                                    'available' ? (
+                                                        <Button
+                                                            style={
+                                                                theme.available
+                                                            }
+                                                            className='seat-guide'
+                                                            id='ads'
+                                                            onClick={
+                                                                submitHandlerA5
+                                                            }
+                                                        >
+                                                            <span className='seat-place'>
+                                                                A5
+                                                            </span>
+                                                        </Button>
+                                                    ) : (
+                                                        <div>
+                                                            {clickA5 ===
+                                                            true ? (
+                                                                (total += prize) &&
+                                                                (show += A5) && (
+                                                                    <Button
+                                                                        style={
+                                                                            theme.select
+                                                                        }
+                                                                        className='seat-guide'
+                                                                        id='ads'
+                                                                    >
+                                                                        <span className='seat-place'>
+                                                                            {A5}
+                                                                        </span>
+                                                                    </Button>
+                                                                )
+                                                            ) : (
+                                                                <Button
+                                                                    className='seat-guide'
+                                                                    id='ads'
+                                                                    onClick={
+                                                                        submitHandlerA5
+                                                                    }
+                                                                >
+                                                                    <span className='seat-place'>
+                                                                        A5
+                                                                    </span>
+                                                                </Button>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {' '}
+                                                    {seats?.A6?.status !==
+                                                    'available' ? (
+                                                        <Button
+                                                            style={
+                                                                theme.available
+                                                            }
+                                                            className='seat-guide'
+                                                            id='ads'
+                                                            onClick={
+                                                                submitHandlerA6
+                                                            }
+                                                        >
+                                                            <span className='seat-place'>
+                                                                A6
+                                                            </span>
+                                                        </Button>
+                                                    ) : (
+                                                        <div>
+                                                            {clickA6 ===
+                                                            true ? (
+                                                                (total += prize) &&
+                                                                (show += A6) && (
+                                                                    <Button
+                                                                        style={
+                                                                            theme.select
+                                                                        }
+                                                                        className='seat-guide'
+                                                                        id='ads'
+                                                                    >
+                                                                        <span className='seat-place'>
+                                                                            {A6}
+                                                                        </span>
+                                                                    </Button>
+                                                                )
+                                                            ) : (
+                                                                <Button
+                                                                    className='seat-guide'
+                                                                    id='ads'
+                                                                    onClick={
+                                                                        submitHandlerA6
+                                                                    }
+                                                                >
+                                                                    <span className='seat-place'>
+                                                                        A6
+                                                                    </span>
+                                                                </Button>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {' '}
+                                                    {seats?.A7?.status !==
+                                                    'available' ? (
+                                                        <Button
+                                                            style={
+                                                                theme.available
+                                                            }
+                                                            className='seat-guide'
+                                                            id='ads'
+                                                            onClick={
+                                                                submitHandlerA7
+                                                            }
+                                                        >
+                                                            <span className='seat-place'>
+                                                                A7
+                                                            </span>
+                                                        </Button>
+                                                    ) : (
+                                                        <div>
+                                                            {clickA7 ===
+                                                            true ? (
+                                                                (total += prize) &&
+                                                                (show += A7) && (
+                                                                    <Button
+                                                                        style={
+                                                                            theme.select
+                                                                        }
+                                                                        className='seat-guide'
+                                                                        id='ads'
+                                                                    >
+                                                                        <span className='seat-place'>
+                                                                            {A7}
+                                                                        </span>
+                                                                    </Button>
+                                                                )
+                                                            ) : (
+                                                                <Button
+                                                                    className='seat-guide'
+                                                                    id='ads'
+                                                                    onClick={
+                                                                        submitHandlerA7
+                                                                    }
+                                                                >
+                                                                    <span className='seat-place'>
+                                                                        A7
+                                                                    </span>
+                                                                </Button>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    {' '}
+                                                    {seats?.A8?.status !==
+                                                    'available' ? (
+                                                        <Button
+                                                            style={
+                                                                theme.available
+                                                            }
+                                                            className='seat-guide'
+                                                            id='ads'
+                                                            onClick={
+                                                                submitHandlerA8
+                                                            }
+                                                        >
+                                                            <span className='seat-place'>
+                                                                A8
+                                                            </span>
+                                                        </Button>
+                                                    ) : (
+                                                        <div>
+                                                            {clickA8 ===
+                                                            true ? (
+                                                                (total += prize) &&
+                                                                (show += A8) && (
+                                                                    <Button
+                                                                        style={
+                                                                            theme.select
+                                                                        }
+                                                                        className='seat-guide'
+                                                                        id='ads'
+                                                                    >
+                                                                        <span className='seat-place'>
+                                                                            {A8}
+                                                                        </span>
+                                                                    </Button>
+                                                                )
+                                                            ) : (
+                                                                <Button
+                                                                    className='seat-guide'
+                                                                    id='ads'
+                                                                    onClick={
+                                                                        submitHandlerA8
+                                                                    }
+                                                                >
+                                                                    <span className='seat-place'>
+                                                                        A8
+                                                                    </span>
+                                                                </Button>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>

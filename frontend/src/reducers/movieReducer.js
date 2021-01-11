@@ -18,17 +18,19 @@ import {
     MOVIE_DETAILS_SUCCESS,
     MOVIE_DETAILS_FAIL,
     MOVIE_DETAILS_RESET,
-    NOW_LIST_REQUEST,
-    NOW_LIST_SUCCESS,
-    NOW_LIST_FAIL,
-    COMING_LIST_REQUEST,
-    COMING_LIST_SUCCESS,
-    COMING_LIST_FAIL,
     MOVIE_LIST_RESET,
     MOVIE_UPLOAD_REQUEST,
     MOVIE_UPLOAD_SUCCESS,
     MOVIE_UPLOAD_FAIL,
     MOVIE_UPLOAD_RESET,
+    MOVIE_SEAT_REQUEST,
+    MOVIE_SEAT_SUCCESS,
+    MOVIE_SEAT_FAIL,
+    MOVIE_SEAT_RESET,
+    MOVIE_SEAT_UPDATE_REQUEST,
+    MOVIE_SEAT_UPDATE_SUCCESS,
+    MOVIE_SEAT_UPDATE_FAIL,
+    MOVIE_SEAT_UPDATE_RESET,
 } from '../constants/movieConstant';
 
 export const movieListReducer = (state = { moviesList: [] }, action) => {
@@ -41,34 +43,6 @@ export const movieListReducer = (state = { moviesList: [] }, action) => {
             return { loading: false, error: action.payload };
         case MOVIE_LIST_RESET:
             return { moviesList: {} };
-        default:
-            return state;
-    }
-};
-export const movieNowReducer = (state = { moviesNow: [] }, action) => {
-    switch (action.type) {
-        case NOW_LIST_REQUEST:
-            return { loading: true };
-        case NOW_LIST_SUCCESS:
-            return {
-                loading: false,
-                moviesNow: action.payload,
-            };
-        case NOW_LIST_FAIL:
-            return { loading: false, error: action.payload };
-        default:
-            return state;
-    }
-};
-
-export const movieComingReducer = (state = { moviesComing: [] }, action) => {
-    switch (action.type) {
-        case COMING_LIST_REQUEST:
-            return { loading: true };
-        case COMING_LIST_SUCCESS:
-            return { loading: false, moviesComing: action.payload };
-        case COMING_LIST_FAIL:
-            return { loading: false, error: action.payload };
         default:
             return state;
     }
@@ -148,6 +122,36 @@ export const movieUploadReducer = (state = { movieUploads: {} }, action) => {
             return { loading: false, error: action.payload };
         case MOVIE_UPLOAD_RESET:
             return { movieUploads: {} };
+        default:
+            return state;
+    }
+};
+
+export const seatListReducer = (state = { seats: [] }, action) => {
+    switch (action.type) {
+        case MOVIE_SEAT_REQUEST:
+            return { loading: true };
+        case MOVIE_SEAT_SUCCESS:
+            return { loading: false, seats: action.payload };
+        case MOVIE_SEAT_FAIL:
+            return { loading: false, error: action.payload };
+        case MOVIE_SEAT_RESET:
+            return { seats: {} };
+        default:
+            return state;
+    }
+};
+
+export const seatUpdateReducer = (state = { seat: {} }, action) => {
+    switch (action.type) {
+        case MOVIE_SEAT_UPDATE_REQUEST:
+            return { loading: true };
+        case MOVIE_SEAT_UPDATE_SUCCESS:
+            return { loading: false, seat: action.payload };
+        case MOVIE_SEAT_UPDATE_FAIL:
+            return { loading: false, error: action.payload };
+        case MOVIE_SEAT_UPDATE_RESET:
+            return { seat: {} };
         default:
             return state;
     }

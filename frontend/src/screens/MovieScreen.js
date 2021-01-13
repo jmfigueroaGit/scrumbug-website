@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Rating from '../components/Rating';
-import { updateSeat } from '../actions/movieAction';
+import { checkout, updateSeat } from '../actions/movieAction';
+import { MOVIE_DETAILS_RESET } from '../constants/movieConstant';
 
 const theme = {
     available: {
@@ -16,7 +17,7 @@ const theme = {
     },
 };
 
-const MovieScreen = () => {
+const MovieScreen = ({ history }) => {
     // State if seat button is clicked
     const [clickA1, setClickA1] = useState(false);
     const [clickA2, setClickA2] = useState(false);
@@ -128,6 +129,8 @@ const MovieScreen = () => {
     let [userD7, setUserD7] = useState('');
     let [userD8, setUserD8] = useState('');
 
+    const [full, setFull] = useState(false);
+
     const dispatch = useDispatch();
 
     const userLogin = useSelector((state) => state.userLogin);
@@ -140,7 +143,6 @@ const MovieScreen = () => {
     const { loading, error, seats } = seatList;
 
     const rating = parseFloat(movie.rating);
-    let flag = 0;
     useEffect(() => {
         if (seats) {
             if (seats.movie) {
@@ -217,47 +219,46 @@ const MovieScreen = () => {
                 setUserD6(seats.D6.user);
                 setUserD7(seats.D7.user);
                 setUserD8(seats.D8.user);
+
+                if (
+                    seats.A1.status === 'reserved' &&
+                    seats.A2.status === 'reserved' &&
+                    seats.A3.status === 'reserved' &&
+                    seats.A4.status === 'reserved' &&
+                    seats.A5.status === 'reserved' &&
+                    seats.A6.status === 'reserved' &&
+                    seats.A7.status === 'reserved' &&
+                    seats.A8.status === 'reserved' &&
+                    seats.B1.status === 'reserved' &&
+                    seats.B2.status === 'reserved' &&
+                    seats.B3.status === 'reserved' &&
+                    seats.B4.status === 'reserved' &&
+                    seats.B5.status === 'reserved' &&
+                    seats.B6.status === 'reserved' &&
+                    seats.B7.status === 'reserved' &&
+                    seats.B8.status === 'reserved' &&
+                    seats.C1.status === 'reserved' &&
+                    seats.C2.status === 'reserved' &&
+                    seats.C3.status === 'reserved' &&
+                    seats.C4.status === 'reserved' &&
+                    seats.C5.status === 'reserved' &&
+                    seats.C6.status === 'reserved' &&
+                    seats.C7.status === 'reserved' &&
+                    seats.C8.status === 'reserved' &&
+                    seats.D1.status === 'reserved' &&
+                    seats.D2.status === 'reserved' &&
+                    seats.D3.status === 'reserved' &&
+                    seats.D4.status === 'reserved' &&
+                    seats.D5.status === 'reserved' &&
+                    seats.D6.status === 'reserved' &&
+                    seats.D7.status === 'reserved' &&
+                    seats.D8.status === 'reserved'
+                ) {
+                    setFull(true);
+                }
             }
         }
     }, [dispatch, seats]);
-
-    if (
-        valueA1 === 'reserved' &&
-        valueA2 === 'reserved' &&
-        valueA3 === 'reserved' &&
-        valueA4 === 'reserved' &&
-        valueA5 === 'reserved' &&
-        valueA6 === 'reserved' &&
-        valueA7 === 'reserved' &&
-        valueA8 === 'reserved' &&
-        valueB1 === 'reserved' &&
-        valueB2 === 'reserved' &&
-        valueB3 === 'reserved' &&
-        valueB4 === 'reserved' &&
-        valueB5 === 'reserved' &&
-        valueB6 === 'reserved' &&
-        valueB7 === 'reserved' &&
-        valueB8 === 'reserved' &&
-        valueC1 === 'reserved' &&
-        valueC2 === 'reserved' &&
-        valueC3 === 'reserved' &&
-        valueC4 === 'reserved' &&
-        valueC5 === 'reserved' &&
-        valueC6 === 'reserved' &&
-        valueC7 === 'reserved' &&
-        valueC8 === 'reserved' &&
-        valueD1 === 'reserved' &&
-        valueD2 === 'reserved' &&
-        valueD3 === 'reserved' &&
-        valueD4 === 'reserved' &&
-        valueD5 === 'reserved' &&
-        valueD6 === 'reserved' &&
-        valueD7 === 'reserved' &&
-        valueD8 === 'reserved'
-    ) {
-        flag += 1;
-        alert('No available seats for this movie');
-    }
 
     //Seat button Handlers
 
@@ -489,6 +490,12 @@ const MovieScreen = () => {
         setValueD8('reserved');
     };
 
+    const backHandler = (e) => {
+        e.preventDefault();
+        dispatch({ type: MOVIE_DETAILS_RESET });
+        history.push('/home');
+    };
+
     const A1 = ' A1';
     const A2 = ' A2';
     const A3 = ' A3';
@@ -604,6 +611,16 @@ const MovieScreen = () => {
                     movie: movie._id,
                 })
             );
+            dispatch(
+                checkout({
+                    user_id: userInfo._id,
+                    screeningDate: movie.releasedDate,
+                    cinemaNumber: movie.cinemaNumber,
+                    seatNumber: show,
+                    totalAmount: total,
+                })
+            );
+            history.push(`/checkout/${movie._id}`);
         }
     };
 
@@ -614,9 +631,12 @@ const MovieScreen = () => {
                     {loading && <Loader>Loading</Loader>}
                     {movie ? (
                         <Container fluid>
+                            {' '}
                             <Row className='back-button'>
                                 <Link to='/home'>
-                                    <Button href='/home'>Back</Button>
+                                    <Button href='/home' onClick={backHandler}>
+                                        Back
+                                    </Button>
                                 </Link>
                             </Row>
                             <Row className='single-row1'>
@@ -665,10 +685,6 @@ const MovieScreen = () => {
                                     </div>
                                 </Col>
                                 <Col className='mt-5'>
-                                    <Button className='wishlist mt-3'>
-                                        <i className='fas fa-grin-stars' />
-                                        Watch Trailer
-                                    </Button>
                                 </Col>
                             </Row>
                             <Container className='cinema-seat' fluid>
@@ -2350,14 +2366,14 @@ const MovieScreen = () => {
                                         )}
                                         <br />
                                         <div className='add-to-cart-button'>
-                                            {flag === 0 ? (
-                                                <Button
-                                                    onClick={submitDataHandler}
-                                                >
+                                            {full === true ? (
+                                                <Button disabled>
                                                     Proceed to checkout
                                                 </Button>
                                             ) : (
-                                                <Button disabled>
+                                                <Button
+                                                    onClick={submitDataHandler}
+                                                >
                                                     Proceed to checkout
                                                 </Button>
                                             )}

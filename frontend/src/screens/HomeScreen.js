@@ -109,12 +109,7 @@ const HomeScreen = () => {
                                                         </Button>
                                                     </Link>
                                                 </Col>
-                                                <Col>
-                                                    <Button className='wishlist'>
-                                                        <i className='fas fa-grin-stars' />
-                                                        Watch Trailer
-                                                    </Button>
-                                                </Col>
+                                                <Col></Col>
                                                 <Col></Col>
                                             </Row>
                                         </Carousel.Caption>
@@ -158,10 +153,6 @@ const HomeScreen = () => {
                                                                         ticket
                                                                     </Button>
                                                                 </Link>
-                                                                <Button className='hover-button'>
-                                                                    Watch
-                                                                    Trailer
-                                                                </Button>
                                                             </div>
                                                         </div>
                                                         <Card.Body className='card-body'>
@@ -217,10 +208,6 @@ const HomeScreen = () => {
                                                                         ticket
                                                                     </Button>
                                                                 </Link>
-                                                                <Button className='hover-button'>
-                                                                    Watch
-                                                                    Trailer
-                                                                </Button>
                                                             </div>
                                                         </div>
                                                         <Card.Body className='card-body'>

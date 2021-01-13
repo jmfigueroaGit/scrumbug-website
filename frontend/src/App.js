@@ -24,6 +24,7 @@ import MovieEditScreen from './screens/AdminScreens/Movie/AddMovie/MovieEditScre
 import MovieAddPoster from './screens/AdminScreens/Movie/AddMovie/MovieAddPoster';
 import Default from './screens/Default';
 import MovieScreen from './screens/MovieScreen';
+import CheckoutScreen from './screens/CheckoutScreen';
 const App = () => {
     return (
         <div className='App'>
@@ -73,6 +74,10 @@ const App = () => {
                         <Route
                             path='/movie-screen/:id'
                             component={MovieScreen}
+                        />
+                        <Route
+                            path='/checkout/:id'
+                            component={CheckoutScreen}
                         />
                     </Container>
                 </main>

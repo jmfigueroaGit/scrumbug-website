@@ -28,6 +28,14 @@ import {
     MOVIE_SEAT_UPDATE_SUCCESS,
     MOVIE_SEAT_UPDATE_FAIL,
     MOVIE_SEAT_UPDATE_RESET,
+    MOVIE_SEAT_RESERVE_REQUEST,
+    MOVIE_SEAT_RESERVE_SUCCESS,
+    MOVIE_SEAT_RESERVE_FAIL,
+    MOVIE_SEAT_RESERVE_RESET,
+    MOVIE_CHECKOUT_REQUEST,
+    MOVIE_CHECKOUT_SUCCESS,
+    MOVIE_CHECKOUT_FAIL,
+    MOVIE_CHECKOUT_RESET,
 } from '../constants/movieConstant';
 import { USER_LIST_RESET } from '../constants/userConstant';
 
@@ -414,6 +422,66 @@ export const updateSeat = (seat) => async (dispatch, getState) => {
         dispatch({
             type: MOVIE_SEAT_UPDATE_FAIL,
             payload: message,
+        });
+    }
+};
+
+export const reservedSeat = (seat) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: MOVIE_SEAT_RESERVE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.post(
+            `/api/movies/checkout/${seat.movie}`,
+            seat,
+            config
+        );
+
+        dispatch({ type: MOVIE_SEAT_RESERVE_SUCCESS, payload: data });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: MOVIE_SEAT_RESERVE_FAIL,
+            payload: message,
+        });
+    }
+};
+
+export const checkout = (data) => async (dispatch) => {
+    try {
+        dispatch({
+            type: MOVIE_CHECKOUT_REQUEST,
+        });
+
+        dispatch({
+            type: MOVIE_CHECKOUT_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: MOVIE_CHECKOUT_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
         });
     }
 };

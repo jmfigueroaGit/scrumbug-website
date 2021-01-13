@@ -22,6 +22,8 @@ import {
     movieUploadReducer,
     seatListReducer,
     seatUpdateReducer,
+    seatReserveReducer,
+    checkoutReducer,
 } from './reducers/movieReducer';
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -43,6 +45,8 @@ const reducer = combineReducers({
     movieUpload: movieUploadReducer,
     seatList: seatListReducer,
     seatUpdate: seatUpdateReducer,
+    seatReserve: seatReserveReducer,
+    checkout: checkoutReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

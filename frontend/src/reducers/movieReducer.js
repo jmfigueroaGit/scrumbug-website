@@ -31,6 +31,14 @@ import {
     MOVIE_SEAT_UPDATE_SUCCESS,
     MOVIE_SEAT_UPDATE_FAIL,
     MOVIE_SEAT_UPDATE_RESET,
+    MOVIE_SEAT_RESERVE_REQUEST,
+    MOVIE_SEAT_RESERVE_SUCCESS,
+    MOVIE_SEAT_RESERVE_FAIL,
+    MOVIE_SEAT_RESERVE_RESET,
+    MOVIE_CHECKOUT_REQUEST,
+    MOVIE_CHECKOUT_SUCCESS,
+    MOVIE_CHECKOUT_FAIL,
+    MOVIE_CHECKOUT_RESET,
 } from '../constants/movieConstant';
 
 export const movieListReducer = (state = { moviesList: [] }, action) => {
@@ -152,6 +160,36 @@ export const seatUpdateReducer = (state = { seat: {} }, action) => {
             return { loading: false, error: action.payload };
         case MOVIE_SEAT_UPDATE_RESET:
             return { seat: {} };
+        default:
+            return state;
+    }
+};
+
+export const seatReserveReducer = (state = { reserveInfo: {} }, action) => {
+    switch (action.type) {
+        case MOVIE_SEAT_RESERVE_REQUEST:
+            return { loading: true };
+        case MOVIE_SEAT_RESERVE_SUCCESS:
+            return { loading: false, reserveInfo: action.payload };
+        case MOVIE_SEAT_RESERVE_FAIL:
+            return { loading: false, error: action.payload };
+        case MOVIE_SEAT_RESERVE_RESET:
+            return { reserveInfo: {} };
+        default:
+            return state;
+    }
+};
+
+export const checkoutReducer = (state = { checkoutInfo: {} }, action) => {
+    switch (action.type) {
+        case MOVIE_CHECKOUT_REQUEST:
+            return { loading: true };
+        case MOVIE_CHECKOUT_SUCCESS:
+            return { loading: false, checkoutInfo: action.payload };
+        case MOVIE_CHECKOUT_FAIL:
+            return { loading: false, error: action.payload };
+        case MOVIE_CHECKOUT_RESET:
+            return { checkoutInfo: {} };
         default:
             return state;
     }

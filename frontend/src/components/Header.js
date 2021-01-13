@@ -180,13 +180,9 @@ const Header = () => {
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Col>
+                                <Col sm={3}></Col>
                                 <Col sm={3}>
-                                    <div className='d-flex column-order'>
-                                        <i className='fas fa-shopping-cart cart-click'></i>
-                                    </div>
-                                </Col>
-                                <Col sm={3}>
-                                    <div className='nav-search mx-3'>
+                                    {/* <div className='nav-search mx-3'>
                                         <form>
                                             <input
                                                 type='text'
@@ -196,7 +192,7 @@ const Header = () => {
                                                 <i className='fa fa-search'></i>
                                             </button>
                                         </form>
-                                    </div>
+                                    </div> */}
                                 </Col>
                             </Row>
                         </Container>

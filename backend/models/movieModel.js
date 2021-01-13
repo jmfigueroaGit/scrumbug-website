@@ -8,7 +8,7 @@ const movieSchema = mongoose.Schema(
             required: [true, 'Title field is required'],
         },
 
-        mainCast: {
+        movieTitle: {
             type: String,
             required: [true, 'Main Cast field is required'],
         },

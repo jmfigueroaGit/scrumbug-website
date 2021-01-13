@@ -44,7 +44,7 @@ const HomeScreen = () => {
                                         interval={2500}
                                         key={movie._id}
                                     >
-                                        <div>
+                                        <div className='crop'>
                                             <img
                                                 className='image-slider'
                                                 src={movie.banner}
@@ -140,6 +140,7 @@ const HomeScreen = () => {
                                                             src={movie.poster}
                                                             className='card-image'
                                                         />
+
                                                         <div className='image-hover'>
                                                             <div className='hover-content'>
                                                                 <Link

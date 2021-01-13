@@ -17,6 +17,7 @@ import { uploadMoviePoster } from '../../../../actions/movieAction';
 import {
     MOVIE_DETAILS_RESET,
     MOVIE_UPLOAD_RESET,
+    MOVIE_ADD_RESET,
 } from '../../../../constants/movieConstant';
 const MovieAddPoster = ({ history, match }) => {
     const movieId = match.params.id;
@@ -46,6 +47,7 @@ const MovieAddPoster = ({ history, match }) => {
         }
         if (movie) {
             if (movie._id) {
+                dispatch({ type: MOVIE_ADD_RESET });
                 dispatch({ type: MOVIE_DETAILS_RESET });
                 dispatch({ type: MOVIE_UPLOAD_RESET });
                 history.push('/movielist');

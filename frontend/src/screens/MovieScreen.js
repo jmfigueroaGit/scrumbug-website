@@ -2303,36 +2303,21 @@ const MovieScreen = () => {
                                                     <Button
                                                         className='legend-available'
                                                         id='ads'
-                                                        onClick={
-                                                            submitHandlerD3
-                                                        }
-                                                    >
-                                                        <span className='seat-place'></span>
-                                                    </Button>
+                                                    ></Button>
                                                     <span> - Available</span>
                                                 </div>
                                                 <div className='legend '>
                                                     <Button
                                                         className='legend-select'
                                                         id='ads'
-                                                        onClick={
-                                                            submitHandlerD3
-                                                        }
-                                                    >
-                                                        <span className='seat-place'></span>
-                                                    </Button>
+                                                    ></Button>
                                                     <span> - Select</span>
                                                 </div>
                                                 <div className='legend '>
                                                     <Button
                                                         className='legend-reserved'
                                                         id='ads'
-                                                        onClick={
-                                                            submitHandlerD3
-                                                        }
-                                                    >
-                                                        <span className='seat-place'></span>
-                                                    </Button>
+                                                    ></Button>
                                                     <span> - Reserved</span>
                                                 </div>
                                             </Col>

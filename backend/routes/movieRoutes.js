@@ -10,7 +10,12 @@ import {
     uploadMoviePoster,
 } from '../controllers/movieControllers.js';
 import { findSeat, updateSeat } from '../controllers/seatController.js';
-import { reserveTicket } from '../controllers/reservationControllers.js';
+import {
+    deleteOrder,
+    findOrders,
+    getOrders,
+    reserveTicket,
+} from '../controllers/reservationControllers.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
 
 const router = express();
@@ -29,4 +34,7 @@ router
 router.route('/poster/:id').put(protect, admin, uploadMoviePoster);
 router.route('/seat/:id').get(findSeat).put(updateSeat);
 router.route('/checkout/:id').post(reserveTicket);
+router.route('/orders').post(findOrders);
+router.route('/order-list').post(getOrders);
+router.route('/orders/:id').delete(protect, admin, deleteOrder);
 export default router;

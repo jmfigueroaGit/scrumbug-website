@@ -3,33 +3,40 @@ import { Button, Col, Container, ListGroup, Row, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import {
+    getListOrders,
+    deleteOrder,
     listMovies,
-    deleteMovie,
-    getMovieDetails,
 } from '../../../actions/movieAction';
+import { listUsers } from '../../../actions/userAction';
 import Loader from '../../../components/Loader';
-const MovieListScreen = ({ history }) => {
+const OrderListScreen = ({ history }) => {
     const dispatch = useDispatch();
+
+    const userList = useSelector((state) => state.userList);
+    const { users } = userList;
+
     const movieList = useSelector((state) => state.movieList);
     const { loading, error, moviesList } = movieList;
+
+    const listOrders = useSelector((state) => state.listOrders);
+    const { orderList } = listOrders;
+
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
     useEffect(() => {
         if (userInfo && userInfo.isAdmin) {
+            dispatch(getListOrders());
+            dispatch(listUsers());
             dispatch(listMovies());
         } else {
             history.push('/login');
         }
     }, [dispatch, history, userInfo]);
 
-    const editHandler = (id) => {
-        dispatch(getMovieDetails(id));
-    };
-
     const deleteHandler = (id) => {
-        if (window.confirm('Are you sure you to delete this movie?')) {
-            dispatch(deleteMovie(id));
+        if (window.confirm('Are you sure you want delete this order?')) {
+            dispatch(deleteOrder(id));
         }
     };
 
@@ -60,19 +67,19 @@ const MovieListScreen = ({ history }) => {
                                         </span>
                                     </ListGroup.Item>
                                 </Link>
-                                <ListGroup.Item as='li' active>
-                                    <span>
-                                        <i className='fas fa-film' /> Movies
-                                    </span>
-                                </ListGroup.Item>
-                                <Link to='/order-list'>
+                                <Link to='/movielist'>
                                     <ListGroup.Item as='li'>
                                         <span>
-                                            <i className='fas fa-shopping-cart' />
-                                            Orders
+                                            <i className='fas fa-film' /> Movies
                                         </span>
                                     </ListGroup.Item>
                                 </Link>
+                                <ListGroup.Item as='li' active>
+                                    <span>
+                                        <i className='fas fa-shopping-cart' />
+                                        Orders
+                                    </span>
+                                </ListGroup.Item>
                             </ListGroup>
                         </Col>
                         <Col sm={10} className='admin-main-col'>
@@ -93,48 +100,61 @@ const MovieListScreen = ({ history }) => {
                                 >
                                     <thead>
                                         <tr className='col-center'>
-                                            <th>TITLE</th>
-                                            <th>GENRE</th>
-                                            <th>DIRECTOR</th>
-                                            <th>STATUS</th>
-                                            <th>EDIT MOVIE</th>
-                                            <th>DELETE MOVIE</th>
+                                            <th>MOVIE TITLE</th>
+                                            <th>USER</th>
+                                            <th>SEAT NUMBER</th>
+                                            <th>TOTAL COST</th>
+                                            <th>DELETE ORDER</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {moviesList?.map((movie) => (
+                                        {orderList?.map((order) => (
                                             <tr
-                                                key={movie._id}
+                                                key={order._id}
                                                 className='col-center'
                                             >
-                                                <td>{movie.movieTitle}</td>
-                                                <td>{movie.genre}</td>
-                                                <td>{movie.director}</td>
-                                                <td>{movie.status}</td>
                                                 <td>
-                                                    <Link
-                                                        to={`/movie/${movie._id}`}
-                                                    >
-                                                        <Button
-                                                            variant='light'
-                                                            className='btn-sm'
-                                                            onClick={() =>
-                                                                editHandler(
-                                                                    movie._id
-                                                                )
-                                                            }
-                                                        >
-                                                            <i className='fas fa-edit'></i>
-                                                        </Button>
-                                                    </Link>
+                                                    {moviesList?.map(
+                                                        (movie) => (
+                                                            <div
+                                                                key={movie._id}
+                                                            >
+                                                                {movie._id ===
+                                                                    order.movie_id && (
+                                                                    <span>
+                                                                        {
+                                                                            movie.movieTitle
+                                                                        }
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        )
+                                                    )}
                                                 </td>
+                                                <td>
+                                                    {users?.map((user) => (
+                                                        <div key={user._id}>
+                                                            {user._id ===
+                                                                order.user_id && (
+                                                                <span>
+                                                                    {
+                                                                        user.fullName
+                                                                    }
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    ))}
+                                                </td>
+                                                <td>{order.seatNumber}</td>
+                                                <td>{order.totalAmount}</td>
+
                                                 <td>
                                                     <Button
                                                         variant='danger'
                                                         className='btn-sm'
                                                         onClick={() =>
                                                             deleteHandler(
-                                                                movie._id
+                                                                order._id
                                                             )
                                                         }
                                                     >
@@ -156,4 +176,4 @@ const MovieListScreen = ({ history }) => {
     );
 };
 
-export default MovieListScreen;
+export default OrderListScreen;

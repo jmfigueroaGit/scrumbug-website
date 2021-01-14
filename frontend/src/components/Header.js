@@ -95,14 +95,9 @@ const Header = () => {
                                             id='username'
                                         >
                                             <div>
-                                                <LinkContainer to='/profile'>
+                                                <LinkContainer to='/order'>
                                                     <NavDropdown.Item>
-                                                        Profile
-                                                    </NavDropdown.Item>
-                                                </LinkContainer>
-                                                <LinkContainer to='/profile'>
-                                                    <NavDropdown.Item>
-                                                        Wishlist
+                                                        My Orders
                                                     </NavDropdown.Item>
                                                 </LinkContainer>
                                                 <NavDropdown.Item
@@ -118,9 +113,12 @@ const Header = () => {
                             <Row className='secondary-header py-3'>
                                 <Col sm={6}>
                                     <Dropdown className='dropdown'>
-                                        <Dropdown.Toggle className='dropdown-genres'>
-                                            All Genres
-                                        </Dropdown.Toggle>
+                                        {/* <Dropdown.Toggle
+                                            className='dropdown-genres'
+                                            disabled
+                                        >
+                                             All Genres 
+                                        </Dropdown.Toggle> */}
 
                                         <Dropdown.Menu>
                                             <Dropdown.Item href='#/action-1'>

@@ -24,8 +24,16 @@ import {
     seatUpdateReducer,
     seatReserveReducer,
     checkoutReducer,
+    checkoutTotalReducer,
+    dialogReducer,
+    getOrderReducer,
+    getMovieReducer,
+    listOrdersReducer,
+    orderDeleteReducer,
 } from './reducers/movieReducer';
 const reducer = combineReducers({
+    dialog: dialogReducer,
+
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userEmailAuth: userEmailAuthReducer,
@@ -46,7 +54,12 @@ const reducer = combineReducers({
     seatList: seatListReducer,
     seatUpdate: seatUpdateReducer,
     seatReserve: seatReserveReducer,
-    checkout: checkoutReducer
+    checkout: checkoutReducer,
+    checkoutTotal: checkoutTotalReducer,
+    getOrder: getOrderReducer,
+    getMovie: getMovieReducer,
+    listOrders: listOrdersReducer,
+    orderDelete: orderDeleteReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

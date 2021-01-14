@@ -36,6 +36,27 @@ import {
     MOVIE_CHECKOUT_SUCCESS,
     MOVIE_CHECKOUT_FAIL,
     MOVIE_CHECKOUT_RESET,
+    MOVIE_CHECKOUT_TOTAL_FAIL,
+    MOVIE_CHECKOUT_TOTAL_SUCCESS,
+    MOVIE_CHECKOUT_TOTAL_REQUEST,
+    MOVIE_CHECKOUT_TOTAL_RESET,
+    MOVIE_DETAILS_RESET,
+    MOVIE_SEAT_RESET,
+    DIALOG_REQUEST,
+    DIALOG_SUCCESS,
+    DIALOG_FAIL,
+    GET_ORDER_REQUEST,
+    GET_ORDER_SUCCESS,
+    GET_ORDER_FAIL,
+    GET_MOVIE_REQUEST,
+    GET_MOVIE_SUCCESS,
+    GET_MOVIE_FAIL,
+    LIST_ORDER_REQUEST,
+    LIST_ORDER_SUCCESS,
+    LIST_ORDER_FAIL,
+    ORDER_DELETE_REQUEST,
+    ORDER_DELETE_SUCCESS,
+    ORDER_DELETE_FAIL,
 } from '../constants/movieConstant';
 import { USER_LIST_RESET } from '../constants/userConstant';
 
@@ -482,6 +503,231 @@ export const checkout = (data) => async (dispatch) => {
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message,
+        });
+    }
+};
+
+export const checkoutOrder = (reservedInfo) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: MOVIE_CHECKOUT_TOTAL_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.post(
+            `/api/movies/checkout/${reservedInfo.movie_id}`,
+            reservedInfo,
+            config
+        );
+
+        dispatch({
+            type: MOVIE_CHECKOUT_TOTAL_SUCCESS,
+            payload: data,
+        });
+
+        dispatch(
+            dialogBox({
+                messageData: 'Order successfully added',
+            })
+        );
+
+        dispatch({ type: MOVIE_CHECKOUT_TOTAL_RESET });
+        dispatch({ type: MOVIE_DETAILS_RESET });
+        dispatch({ type: MOVIE_SEAT_RESET });
+        dispatch({ type: MOVIE_CHECKOUT_RESET });
+        dispatch({ type: MOVIE_SEAT_UPDATE_RESET });
+    } catch (error) {
+        dispatch({
+            type: MOVIE_CHECKOUT_TOTAL_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const dialogBox = (data) => async (dispatch) => {
+    try {
+        dispatch({
+            type: DIALOG_REQUEST,
+        });
+
+        dispatch({
+            type: DIALOG_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: DIALOG_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const getOrderDetails = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: GET_ORDER_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.post(`/api/movies/orders`, id, config);
+
+        dispatch({
+            type: GET_ORDER_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: GET_ORDER_FAIL,
+            payload: message,
+        });
+    }
+};
+
+export const getOrderMovieDetails = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: GET_MOVIE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.get(`/api/movies/${id}`, config);
+
+        dispatch({
+            type: GET_MOVIE_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: GET_MOVIE_FAIL,
+            payload: message,
+        });
+    }
+};
+
+export const getListOrders = () => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: LIST_ORDER_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.post(`/api/movies/order-list`, config);
+
+        dispatch({
+            type: LIST_ORDER_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: LIST_ORDER_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const deleteOrder = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: ORDER_DELETE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        await axios.delete(`/api/movies/orders/${id}`, config);
+
+        dispatch({
+            type: ORDER_DELETE_SUCCESS,
+        });
+        dispatch(getListOrders());
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        if (message === 'Not authorized, token failed') {
+            dispatch(logout());
+        }
+        dispatch({
+            type: ORDER_DELETE_FAIL,
+            payload: message,
         });
     }
 };

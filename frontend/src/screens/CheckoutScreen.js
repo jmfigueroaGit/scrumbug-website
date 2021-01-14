@@ -5,9 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Rating from '../components/Rating';
-import { updateSeat } from '../actions/movieAction';
+import { checkoutOrder } from '../actions/movieAction';
+import {
+    MOVIE_CHECKOUT_RESET,
+    MOVIE_DETAILS_RESET,
+    MOVIE_SEAT_RESET,
+    MOVIE_SEAT_UPDATE_RESET,
+} from '../constants/movieConstant';
 
-const MovieScreen = () => {
+const MovieScreen = ({ history }) => {
     const dispatch = useDispatch();
     const [total, setTotal] = useState('');
     const [seat, setSeat] = useState('');
@@ -29,6 +35,21 @@ const MovieScreen = () => {
             }
         }
     }, [dispatch, checkoutInfo]);
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        dispatch(
+            checkoutOrder({
+                user_id: checkoutInfo.user_id,
+                movie_id: movie._id,
+                screeningDate: checkoutInfo.screeningDate,
+                cinemaNumber: checkoutInfo.cinemaNumber,
+                seatNumber: checkoutInfo.seatNumber,
+                totalAmount: checkoutInfo.totalAmount,
+            })
+        );
+        history.push('/home');
+    };
 
     return (
         <div>
@@ -87,7 +108,7 @@ const MovieScreen = () => {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col className='mt-5'>
+                                <Col className='mt-5 checkout-details'>
                                     <div>
                                         <h5>Name: {userInfo.fullName}</h5>
                                         <h5>
@@ -97,9 +118,15 @@ const MovieScreen = () => {
                                             Cinema Number: {movie.cinemaNumber}
                                         </h5>
                                         <h5>Seat Number: {seat}</h5>
-                                        <h5>Total Amount: {total}</h5>
+                                        <h5>Total Amount: $ {total}</h5>
                                     </div>
-                                    <Button href='/home'>Confirm</Button>
+                                    <Button
+                                        href='/home'
+                                        className='confirm-btn'
+                                        onClick={submitHandler}
+                                    >
+                                        Confirm
+                                    </Button>
                                 </Col>
                             </Row>
                             <Container

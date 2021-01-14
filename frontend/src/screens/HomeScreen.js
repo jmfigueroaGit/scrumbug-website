@@ -9,8 +9,11 @@ import {
 } from '../actions/movieAction';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import DialogBox from '../components/DialogBox';
 const HomeScreen = () => {
     const [message, setMessage] = useState(null);
+
+    const [dialogBox, setDialogBox] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -20,11 +23,25 @@ const HomeScreen = () => {
     const movieList = useSelector((state) => state.movieList);
     const { loading, error, moviesList } = movieList;
 
+    const dialog = useSelector((state) => state.dialog);
+    const { messageData } = dialog;
+
     useEffect(() => {
         if (userInfo) {
-            dispatch(listMovies());
+            if (userInfo._id) {
+                dispatch(listMovies());
+                if (messageData) {
+                    if (
+                        messageData.messageData === 'Order successfully added'
+                    ) {
+                        setDialogBox(true);
+                    } else {
+                        setDialogBox(false);
+                    }
+                }
+            }
         }
-    }, [dispatch, userInfo]);
+    }, [dispatch, userInfo, messageData]);
 
     const movieScreen = (id) => {
         dispatch(getMovieDetails(id));
@@ -37,6 +54,13 @@ const HomeScreen = () => {
                 <div>
                     {movieList ? (
                         <Container fluid>
+                            {dialogBox && (
+                                <DialogBox
+                                    title='Order Successfully Added!'
+                                    body='View you recent purchase'
+                                />
+                            )}
+
                             {loading && <Loader>Loading</Loader>}
                             <Carousel>
                                 {moviesList?.map((movie) => (

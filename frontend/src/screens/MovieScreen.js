@@ -6,7 +6,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Rating from '../components/Rating';
 import { checkout, updateSeat } from '../actions/movieAction';
-import { MOVIE_DETAILS_RESET } from '../constants/movieConstant';
+import { MOVIE_DETAILS_RESET, MOVIE_SEAT_RESET } from '../constants/movieConstant';
 
 const theme = {
     available: {
@@ -493,6 +493,7 @@ const MovieScreen = ({ history }) => {
     const backHandler = (e) => {
         e.preventDefault();
         dispatch({ type: MOVIE_DETAILS_RESET });
+        dispatch({ type: MOVIE_SEAT_RESET });
         history.push('/home');
     };
 

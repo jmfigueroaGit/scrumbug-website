@@ -147,13 +147,14 @@ const CinemaDetailsScreen = ({ history }) => {
                                                 <i className='fas fa-film' />{' '}
                                                 Movies
                                             </span>
-                                        </ListGroup.Item>
+                                        </ListGroup.Item>{' '}
+                                        <Link to='/order-list'>
                                         <ListGroup.Item as='li'>
                                             <span>
                                                 <i className='fas fa-shopping-cart' />
-                                                Bookings
+                                                Orders
                                             </span>
-                                        </ListGroup.Item>
+                                        </ListGroup.Item></Link>
                                     </ListGroup>
                                 </Col>
                                 <Col sm={10} className='admin-main-col'>

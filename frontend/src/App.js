@@ -25,6 +25,8 @@ import MovieAddPoster from './screens/AdminScreens/Movie/AddMovie/MovieAddPoster
 import Default from './screens/Default';
 import MovieScreen from './screens/MovieScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
+import OrderScreen from './screens/OrderScreen';
+import OrderListScreen from './screens/AdminScreens/Orders/OrderListScreen';
 const App = () => {
     return (
         <div className='App'>
@@ -79,6 +81,8 @@ const App = () => {
                             path='/checkout/:id'
                             component={CheckoutScreen}
                         />
+                        <Route path='/order' component={OrderScreen} />
+                        <Route path='/order-list' component={OrderListScreen} />
                     </Container>
                 </main>
 
